@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=ADC_Interleaved_DMAmode2
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex

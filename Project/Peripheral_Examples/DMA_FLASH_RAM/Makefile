@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=DMA_FLASH_RAM
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex
@@ -82,7 +82,7 @@ ASMOBJS  = $(notdir $(SRC:.s=.o))
 
 # Compile Flags
 OPTIMIZE  = -Os
-CFLAGS    = $(MCFLAGS) -Wl,-T,$(LINKER)
+CFLAGS    = $(MCFLAGS) -g -Wl,-T,$(LINKER)
 
 # Targets
 all: $(TARGET)

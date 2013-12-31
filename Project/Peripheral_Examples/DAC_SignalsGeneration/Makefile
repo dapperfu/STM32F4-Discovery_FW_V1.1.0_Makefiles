@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=DAC_SignalsGeneration
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex

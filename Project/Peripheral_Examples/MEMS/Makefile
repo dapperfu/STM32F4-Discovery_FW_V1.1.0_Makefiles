@@ -1,5 +1,4 @@
-PROJECT=IO_Toggle
-
+PROJECT=LIS302DL
 BUILDDIR=.
 TARGET=$(PROJECT).hex
 EXECUTABLE=$(PROJECT).elf
@@ -30,6 +29,7 @@ SRC = main.c \
 	stm32f4xx_it.c \
 	system_stm32f4xx.c \
 	$(STMFIRM)/Utilities/STM32F4-Discovery/stm32f4_discovery.c \
+	$(STMFIRM)/Utilities/STM32F4-Discovery/stm32f4_discovery_lis302dl.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_adc.c \

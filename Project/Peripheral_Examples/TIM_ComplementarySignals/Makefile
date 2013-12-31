@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=TIM_ComplementarySignals
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex

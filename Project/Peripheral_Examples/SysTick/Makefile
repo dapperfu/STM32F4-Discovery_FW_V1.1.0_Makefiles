@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=SysTick
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex
@@ -19,8 +19,8 @@ STMFIRM=../../..
 STM32_INCLUDES = $(STMFIRM)/Utilities/STM32F4-Discovery/ \
 	$(STMFIRM)/Libraries/CMSIS/Device/ST/STM32F4xx/Include/ \
 	$(STMFIRM)/Libraries/CMSIS/Include/ \
-	$(STMFIRM)/Libraries/CMSIS/Lib/ARM \
-	$(STMFIRM)/Libraries/CMSIS/Lib/GCC \
+	$(STMFIRM)/Libraries/CMSIS/Lib/ARM/ \
+	$(STMFIRM)/Libraries/CMSIS/Lib/GCC/ \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/inc/ \
 	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Class/hid/inc \
 	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Core/inc/ \

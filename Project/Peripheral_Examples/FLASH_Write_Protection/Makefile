@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=FLASH_Write_Protection
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex

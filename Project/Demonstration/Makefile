@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=STM32F4-Discovery_Demo
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex
@@ -14,7 +14,7 @@ OD=arm-none-eabi-objdump
 # Used in Windows to handle absolute paths and use sh instead cmd.com
 SHELL=/bin/sh
 # Relative path to STM32F4-Discovery-FW root.
-STMFIRM=../../..
+STMFIRM=../..
 # Include Directories.
 STM32_INCLUDES = $(STMFIRM)/Utilities/STM32F4-Discovery/ \
 	$(STMFIRM)/Libraries/CMSIS/Device/ST/STM32F4xx/Include/ \
@@ -27,10 +27,22 @@ STM32_INCLUDES = $(STMFIRM)/Utilities/STM32F4-Discovery/ \
 	$(STMFIRM)/Libraries/STM32_USB_OTG_Driver/inc/ \
 # Source Files
 SRC = main.c \
+	selftest.c \
 	stm32f4xx_it.c \
 	system_stm32f4xx.c \
+	usb_bsp.c \
+	usbd_desc.c \
+	usbd_usr.c \
 	$(STMFIRM)/Utilities/STM32F4-Discovery/stm32f4_discovery.c \
-	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c \
+	$(STMFIRM)/Utilities/STM32F4-Discovery/stm32f4_discovery_audio_codec.c \
+	$(STMFIRM)/Utilities/STM32F4-Discovery/stm32f4_discovery_lis302dl.c \
+	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Core/src/usbd_core.c  \
+	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Core/src/usbd_ioreq.c  \
+	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Core/src/usbd_req.c  \
+	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Class/hid/src/usbd_hid_core.c  \
+	$(STMFIRM)/Libraries/STM32_USB_OTG_Driver/src/usb_core.c  \
+	$(STMFIRM)/Libraries/STM32_USB_OTG_Driver/src/usb_dcd.c  \
+	$(STMFIRM)/Libraries/STM32_USB_OTG_Driver/src/usb_dcd_int.c  \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_adc.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_can.c \
@@ -82,7 +94,7 @@ ASMOBJS  = $(notdir $(SRC:.s=.o))
 
 # Compile Flags
 OPTIMIZE  = -Os
-CFLAGS    = $(MCFLAGS) -Wl,-T,$(LINKER)
+CFLAGS    = -g $(MCFLAGS) -Wl,-T,$(LINKER)
 
 # Targets
 all: $(TARGET)

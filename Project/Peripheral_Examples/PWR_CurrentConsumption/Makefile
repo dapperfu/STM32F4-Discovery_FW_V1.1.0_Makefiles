@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=PWR_CurrentConsumption
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex
@@ -17,6 +17,7 @@ SHELL=/bin/sh
 STMFIRM=../../..
 # Include Directories.
 STM32_INCLUDES = $(STMFIRM)/Utilities/STM32F4-Discovery/ \
+	$(STMFIRM)/Project/Peripheral_Examples/PWR_CurrentConsumption/ \
 	$(STMFIRM)/Libraries/CMSIS/Device/ST/STM32F4xx/Include/ \
 	$(STMFIRM)/Libraries/CMSIS/Include/ \
 	$(STMFIRM)/Libraries/CMSIS/Lib/ARM \
@@ -25,11 +26,13 @@ STM32_INCLUDES = $(STMFIRM)/Utilities/STM32F4-Discovery/ \
 	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Class/hid/inc \
 	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Core/inc/ \
 	$(STMFIRM)/Libraries/STM32_USB_OTG_Driver/inc/ \
+	
 # Source Files
 SRC = main.c \
 	stm32f4xx_it.c \
 	system_stm32f4xx.c \
 	$(STMFIRM)/Utilities/STM32F4-Discovery/stm32f4_discovery.c \
+	$(STMFIRM)/Project/Peripheral_Examples/PWR_CurrentConsumption/stm32f4xx_lp_modes.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_adc.c \

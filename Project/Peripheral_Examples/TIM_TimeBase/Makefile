@@ -1,4 +1,4 @@
-PROJECT=IO_Toggle
+PROJECT=TIM_TimeBase
 
 BUILDDIR=.
 TARGET=$(PROJECT).hex
