@@ -15,6 +15,7 @@ OD=arm-none-eabi-objdump
 SHELL=/bin/sh
 # Relative path to STM32F4-Discovery-FW root.
 STMFIRM=../../..
+FREERTOS=$(STMFIRM)/FreeRTOS/FreeRTOS
 # Include Directories.
 STM32_INCLUDES = $(STMFIRM)/Utilities/STM32F4-Discovery/ \
 	$(STMFIRM)/Libraries/CMSIS/Device/ST/STM32F4xx/Include/ \
@@ -25,10 +26,17 @@ STM32_INCLUDES = $(STMFIRM)/Utilities/STM32F4-Discovery/ \
 	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Class/hid/inc \
 	$(STMFIRM)/Libraries/STM32_USB_Device_Library/Core/inc/ \
 	$(STMFIRM)/Libraries/STM32_USB_OTG_Driver/inc/ \
+	$(FREERTOS)/Source/include \
+	$(FREERTOS)/Source/portable/GCC/ARM_CM4F
+
 # Source Files
 SRC = main.c \
 	stm32f4xx_it.c \
 	system_stm32f4xx.c \
+	$(FREERTOS)/Source/list.c \
+	$(FREERTOS)/Source/queue.c \
+	$(FREERTOS)/Source/tasks.c \
+	$(FREERTOS)/Source/portable/GCC/ARM_CM4F/port.c \
 	$(STMFIRM)/Utilities/STM32F4-Discovery/stm32f4_discovery.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c \
 	$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c \
