@@ -1,0 +1,12 @@
+#Wed Dec 28 16:59:07 EST 2011
+eclipse.preferences.version=1
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.594704143/CPATH/delimiter=;
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.594704143/CPATH/operation=remove
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.594704143/C_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.594704143/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.594704143/append=true
+environment/buildEnvironmentInclude/com.atollic.truestudio.exe.debug.594704143/appendContributed=true
+environment/buildEnvironmentLibrary/com.atollic.truestudio.exe.debug.594704143/LIBRARY_PATH/delimiter=;
+environment/buildEnvironmentLibrary/com.atollic.truestudio.exe.debug.594704143/LIBRARY_PATH/operation=remove
+environment/buildEnvironmentLibrary/com.atollic.truestudio.exe.debug.594704143/append=true
+environment/buildEnvironmentLibrary/com.atollic.truestudio.exe.debug.594704143/appendContributed=true
