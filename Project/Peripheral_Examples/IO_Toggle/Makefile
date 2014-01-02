@@ -1,6 +1,5 @@
 PROJECT=IO_Toggle
 
-BUILDDIR=.
 TARGET_HEX=$(PROJECT).hex
 TARGET_BIN=$(PROJECT).bin
 EXECUTABLE=$(PROJECT).elf
@@ -47,7 +46,6 @@ STM32_INCLUDES+= $(CMSIS)/Lib/ARM
 STM32_INCLUDES+= $(CMSIS)/Lib/GCC
 STM32_INCLUDES+= $(STMFIRM)/Libraries/STM32_USB_Device_Library/Class/hid/inc
 STM32_INCLUDES+= $(STMFIRM)/Libraries/STM32_USB_Device_Library/Core/inc
-STM32_INCLUDES+= $(STM32_USB_OTG_INC)
 
 # Source Files
 SRC = main.c \
@@ -80,14 +78,11 @@ CFLAGS    = $(MCFLAGS) -MD -MP -MF .dep/$(@F).d
 ASMFLAGS  = $(MCFLAGS)
 LINKFLAG  = -Wl,-T,$(LINKER)
 
-# Clean 
-CLEAN=$(EXECUTABLE) $(TARGET) obj/
-
 #$(addprefix ./obj/,$(notdir $(COBJS))) $(addprefix ./obj/,$(notdir $(ASMOBJ)))
 	
 # Targets
 .PHONY: all
-all: obj $(TARGET_HEX) $(TARGET_BIN)
+all: $(TARGET_HEX) $(TARGET_BIN)
 
 $(TARGET_HEX): $(EXECUTABLE)
 	@echo Creating $@
@@ -111,18 +106,17 @@ $(ASMOBJS): %.o : %.s
 
 test: $(COBJS) $(ASMOBJS)
 	@echo $(@F)
-obj: 
-	@mkdir -p obj/
 	
 .PHONY: flash
+.SINGLESHELL: flash
 flash: all
 	@echo Flashing $(TARGET)
-	@C:\PROGRA~2\STMICR~1\STM32S~1\ST-LIN~1\ST-LIN~1.EXE -V -c SWD UR -P $(TARGET) -Rst
+	@C:\PROGRA~2\STMICR~1\STM32S~1\ST-LIN~1\ST-LIN~1.EXE -V -c SWD UR -P $(TARGET_HEX) -Rst
 
 .PHONY: clean
 clean:
-	@echo Removing $(CLEAN)
-	rm -rf $(CLEAN)
+	@echo Removing $(TARGET_HEX) $(TARGET_BIN)
+	@rm -rf .dep/ $(TARGET_HEX) $(TARGET_BIN) $(COBJS) $(ASMOBJS)
 	
 .PHONY: force
 force: clean $(TARGET) 
