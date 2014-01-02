@@ -20,3 +20,4 @@
 *.elf
 *.hex
 *.bin
+*.dep

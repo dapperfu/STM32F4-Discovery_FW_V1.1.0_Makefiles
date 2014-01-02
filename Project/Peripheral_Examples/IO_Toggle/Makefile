@@ -37,7 +37,6 @@ STM32F4xx_StdPeriph_Driver=$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver
 
 # Makefile include with all peripheral driver files
 include $(STM32F4xx_StdPeriph_Driver)/STM32F4xx_StdPeriph_Driver.mk
-include $(STM32_USB_OTG_Driver)/STM32_USB_OTG_Driver.mk
 # Include Directories.
 STM32_INCLUDES = .
 STM32_INCLUDES+= $(STM32F4xx_INC)
@@ -77,7 +76,8 @@ ASMOBJS  = $(STARTUP:.s=.o)
 
 # Compile Flags
 OPTIMIZE  = -O3
-CFLAGS    = $(MCFLAGS)
+CFLAGS    = $(MCFLAGS) -MD -MP -MF .dep/$(@F).d
+ASMFLAGS  = $(MCFLAGS)
 LINKFLAG  = -Wl,-T,$(LINKER)
 
 # Clean 
@@ -87,7 +87,7 @@ CLEAN=$(EXECUTABLE) $(TARGET) obj/
 	
 # Targets
 .PHONY: all
-all: $(TARGET_HEX) $(TARGET_BIN)
+all: obj $(TARGET_HEX) $(TARGET_BIN)
 
 $(TARGET_HEX): $(EXECUTABLE)
 	@echo Creating $@
@@ -99,18 +99,20 @@ $(TARGET_BIN): $(EXECUTABLE)
 
 $(EXECUTABLE): $(COBJS) $(ASMOBJS)
 	@echo Linking $@
-	@$(CC) $(CWARN) $(DEFS) $(CFLAGS) $(LINKFLAG) $(OPTIMIZE) $(IINCDIR) $(addprefix obj/,$(notdir $(COBJS) $(ASMOBJS))) -o $@
+	@$(CC) $(CWARN) $(DEFS) $(CFLAGS) $(LINKFLAG) $(OPTIMIZE) $(IINCDIR) $(COBJS) $(ASMOBJS) -o $@
 
 $(COBJS): %.o : %.c
-	@echo Compiling $(notdir $<) obj/$(notdir $@)
-	@$(CC) -c $(CWARN) $(DEFS) $(CFLAGS) $(IINCDIR) $< -o obj/$(notdir $@)
+	@echo Compiling $(notdir $<)
+	@$(CC) -c $(CWARN) $(DEFS) $(CFLAGS) $(IINCDIR) $< -o $@
 	
 $(ASMOBJS): %.o : %.s
-	@echo Compiling $(notdir $<) obj/$(notdir $@)
-	@$(AS) -c $(CFLAGS) $(IINCDIR) $< -o obj/$(notdir $@)
+	@echo Compiling $(notdir $<)
+	@$(AS) -c $(ASMFLAGS) $(IINCDIR) $< -o $@
 
-obj/: 
-	mkdir -p obj/
+test: $(COBJS) $(ASMOBJS)
+	@echo $(@F)
+obj: 
+	@mkdir -p obj/
 	
 .PHONY: flash
 flash: all
@@ -124,3 +126,10 @@ clean:
 	
 .PHONY: force
 force: clean $(TARGET) 
+
+#
+# Include the dependency files, should be the last of the makefile
+#
+-include $(shell mkdir .dep 2>/dev/null) $(wildcard .dep/*)
+
+# *** EOF ***
