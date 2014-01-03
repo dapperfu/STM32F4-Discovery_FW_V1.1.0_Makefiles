@@ -87,7 +87,7 @@ COBJS    = $(SRC:.c=.o)
 ASMOBJS  = $(STARTUP:.s=.o)
 
 # Compile Flags
-OPTIMIZE  = -O3
+OPTIMIZE  = -Os
 CFLAGS    = $(MCFLAGS) -MD -MP -MF .dep/$(@F).d
 ASMFLAGS  = $(MCFLAGS)
 LINKFLAG  = -Wl,-T,$(LINKER)
