@@ -58,7 +58,6 @@ include $(STM32F4xx_StdPeriph_Driver)/STM32F4xx_StdPeriph_Driver.mk
 # 
 # Define project name and Ram/Flash mode here
 PROJECT        = test
-RUN_FROM_FLASH = 1
 USE_HARD_FPU   = 1
 HEAP_SIZE      = 8192
 STACK_SIZE     = 2048
@@ -66,13 +65,8 @@ STACK_SIZE     = 2048
 #
 # Define linker script file here
 #
-ifeq ($(RUN_FROM_FLASH), 0)
-LDSCRIPT = ./prj/stm32f4xx_ram.ld
-FULL_PRJ = $(PROJECT)_ram
-else
 LDSCRIPT = ./prj/stm32f4xxxg_flash.ld
-FULL_PRJ = $(PROJECT)_rom
-endif
+FULL_PRJ = $(PROJECT)
 
 #
 # Define FPU settings here
