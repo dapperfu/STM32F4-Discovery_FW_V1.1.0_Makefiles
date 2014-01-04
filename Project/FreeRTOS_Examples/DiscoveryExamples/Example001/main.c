@@ -35,7 +35,6 @@
 /* System includes */
 #include <stdio.h>
 #include <stdint.h>
-#include <cross_studio_io.h>
 
 /* CMSIS / hardware includes */
 #include "system_stm32f4xx.h"
@@ -47,34 +46,38 @@
 /* Demo includes. */
 #include "basic_io.h"
 
+#include "debug.h"
 /* Used as a loop counter to create a very crude delay. */
-#define mainDELAY_LOOP_COUNT		( 0xfffff )
+#define mainDELAY_LOOP_COUNT		(0xffffff)
 
 /* The task functions. */
-void vTask1( void *pvParameters );
-void vTask2( void *pvParameters );
+void vTask1(void *pvParameters);
+void vTask2(void *pvParameters);
 
 /*-----------------------------------------------------------*/
 
-int main( void )
+int main(void)
 {
 	/* System Initialization. */
 	SystemInit();
 	SystemCoreClockUpdate();
-
-	debug_printf("Example: 1\n");
-	debug_printf("System Core Clock is running at: %dMHz\n",SystemCoreClock/1000000);
-
+	// Create the debug task & print example number and system core clock.
+	vDebugInit(1);
+	/*
+	vDebugPrintf("Example: 1\r\n");
+	vDebugPrintf("System Core Clock is running at: %dMHz\r\n",SystemCoreClock/1000000);
+	*/
+	
 	/* Create one of the two tasks. */
 	xTaskCreate(	vTask1,		/* Pointer to the function that implements the task. */
-					"Task 1",	/* Text name for the task.  This is to facilitate debugging only. */
+					(const signed char * const)"Task 1",	/* Text name for the task.  This is to facilitate debugging only. */
 					200,		/* Stack depth in words. */
 					NULL,		/* We are not using the task parameter. */
 					1,			/* This task will run at priority 1. */
-					NULL );		/* We are not using the task handle. */
+					NULL);		/* We are not using the task handle. */
 
 	/* Create the other task in exactly the same way. */
-	xTaskCreate( vTask2, "Task 2", 200, NULL, 1, NULL );
+	xTaskCreate(vTask2, (const signed char * const)"Task 2", 200, NULL, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();
@@ -82,23 +85,24 @@ int main( void )
 	/* If all is well we will never reach here as the scheduler will now be
 	running.  If we do reach here then it is likely that there was insufficient
 	heap available for the idle task to be created. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vTask1( void *pvParameters )
+void vTask1(void *pvParameters)
 {
-const char *pcTaskName = "Task 1 is running\n";
+(void)pvParameters;
+const char *pcTaskName = "Task 1 is running\r\n";
 volatile unsigned long ul;
 
 	/* As per most tasks, this task is implemented in an infinite loop. */
-	for( ;; )
+	while(1)
 	{
 		/* Print out the name of this task. */
-		vPrintString( pcTaskName );
+		vPrintString(pcTaskName);
 
 		/* Delay for a period. */
-		for( ul = 0; ul < mainDELAY_LOOP_COUNT; ul++ )
+		for(ul = 0; ul < mainDELAY_LOOP_COUNT; ul++)
 		{
 			/* This loop is just a very crude delay implementation.  There is
 			nothing to do in here.  Later exercises will replace this crude
@@ -108,19 +112,20 @@ volatile unsigned long ul;
 }
 /*-----------------------------------------------------------*/
 
-void vTask2( void *pvParameters )
+void vTask2(void *pvParameters)
 {
-const char *pcTaskName = "Task 2 is running\n";
+(void)pvParameters;
+const char *pcTaskName = "Task 2 is running\r\n";
 volatile unsigned long ul;
 
 	/* As per most tasks, this task is implemented in an infinite loop. */
-	for( ;; )
+	while(1)
 	{
 		/* Print out the name of this task. */
-		vPrintString( pcTaskName );
+		vPrintString(pcTaskName);
 
 		/* Delay for a period. */
-		for( ul = 0; ul < mainDELAY_LOOP_COUNT; ul++ )
+		for(ul = 0; ul < mainDELAY_LOOP_COUNT; ul++)
 		{
 			/* This loop is just a very crude delay implementation.  There is
 			nothing to do in here.  Later exercises will replace this crude
@@ -130,26 +135,28 @@ volatile unsigned long ul;
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationMallocFailedHook( void )
+void vApplicationMallocFailedHook(void)
 {
 	/* This function will only be called if an API call to create a task, queue
 	or semaphore fails because there is too little heap RAM remaining - and
 	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed char *pcTaskName )
+void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 {
+(void)pxTask;
+(void)pcTaskName;
 	/* This function will only be called if a task overflows its stack.  Note
 	that stack overflow checking does slow down the context switch
 	implementation and will only be performed if configCHECK_FOR_STACK_OVERFLOW
 	is set to either 1 or 2 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationIdleHook( void )
+void vApplicationIdleHook(void)
 {
 	/* This example does not use the idle hook to perform any processing.  The
 	idle hook will only be called if configUSE_IDLE_HOOK is set to 1 in 
@@ -157,7 +164,7 @@ void vApplicationIdleHook( void )
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationTickHook( void )
+void vApplicationTickHook(void)
 {
 	/* This example does not use the tick hook to perform any processing.   The
 	tick hook will only be called if configUSE_TICK_HOOK is set to 1 in

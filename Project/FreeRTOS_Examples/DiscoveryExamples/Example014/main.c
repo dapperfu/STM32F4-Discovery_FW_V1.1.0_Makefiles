@@ -35,7 +35,7 @@
 /* System includes */
 #include <stdio.h>
 #include <stdint.h>
-#include <cross_studio_io.h>
+
 
 /* CMSIS / hardware includes */
 #include "system_stm32f4xx.h"
@@ -44,6 +44,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
+#include "debug.h"
 
 /* Demo includes. */
 #include "basic_io.h"
@@ -54,13 +55,13 @@
 /* The interrupt number to use for the software interrupt generation.  This
 could be any unused number.  In this case the first chip level (non system)
 interrupt is used, which happens to be the windowed watchdog (WWDG) on the STM32F407. */
-#define mainSW_INTERRUPT_ID		( ( IRQn_Type ) 0 )
+#define mainSW_INTERRUPT_ID		((IRQn_Type) 0)
 
 /* Macro to force an interrupt. */
-#define mainTRIGGER_INTERRUPT()	NVIC_SetPendingIRQ( mainSW_INTERRUPT_ID )
+#define mainTRIGGER_INTERRUPT()	NVIC_SetPendingIRQ(mainSW_INTERRUPT_ID)
 
 /* Macro to clear the same interrupt. */
-#define mainCLEAR_INTERRUPT()	NVIC_ClearPendingIRQ( mainSW_INTERRUPT_ID )
+#define mainCLEAR_INTERRUPT()	NVIC_ClearPendingIRQ(mainSW_INTERRUPT_ID)
 
 /* The priority of the software interrupt.  The interrupt service routine uses
 an (interrupt safe) FreeRTOS API function, so the priority of the interrupt must
@@ -68,18 +69,18 @@ be equal to or lower than the priority set by
 configMAX_SYSCALL_INTERRUPT_PRIORITY - remembering that on the Cortex M3 high
 numeric values represent low priority values, which can be confusing as it is
 counter intuitive. */
-#define mainSOFTWARE_INTERRUPT_PRIORITY 		( 5 )
+#define mainSOFTWARE_INTERRUPT_PRIORITY 		(5)
 
 /* The tasks to be created. */
-static void vIntegerGenerator( void *pvParameters );
-static void vStringPrinter( void *pvParameters );
+static void vIntegerGenerator(void *pvParameters);
+static void vStringPrinter(void *pvParameters);
 
 /* Enable the software interrupt and set its priority. */
-static void prvSetupSoftwareInterrupt( void );
+static void prvSetupSoftwareInterrupt(void);
 
 /* The service routine for the interrupt.  This is the interrupt that the
 task will be synchronized with. */
-void vSoftwareInterruptHandler( void );
+void vSoftwareInterruptHandler(void);
 
 /*-----------------------------------------------------------*/
 
@@ -93,33 +94,32 @@ xQueueHandle xIntegerQueue, xStringQueue;
 
 /*-----------------------------------------------------------*/
 
-int main( void )
+int main(void)
 {
 	/* System Initialization. */
 	SystemInit();
 	SystemCoreClockUpdate();
-
-	debug_printf("Example: 14\n");
-	debug_printf("System Core Clock is running at: %dMHz\n",SystemCoreClock/1000000);
+	// Create the debug task & print example number and system core clock.
+	vDebugInit(14);
 
     /* Before a queue can be used it must first be created.  Create both queues
 	used by this example.  One queue can hold variables of type unsigned long,
 	the other queue can hold variables of type char*.  Both queues can hold a
 	maximum of 10 items.  A real application should check the return values to
 	ensure the queues have been successfully created. */
-    xIntegerQueue = xQueueCreate( 10, sizeof( unsigned long ) );
-	xStringQueue = xQueueCreate( 10, sizeof( char * ) );
+    xIntegerQueue = xQueueCreate(10, sizeof(unsigned long));
+	xStringQueue = xQueueCreate(10, sizeof(char *));
 
    	/* Enable the software interrupt and set its priority. */
    	prvSetupSoftwareInterrupt();
 
 	/* Create the task that uses a queue to pass integers to the interrupt service
 	routine.  The task is created at priority 1. */
-	xTaskCreate( vIntegerGenerator, "IntGen", 240, NULL, 1, NULL );
+	xTaskCreate(vIntegerGenerator, (const signed char * const)"IntGen", 240, NULL, 1, NULL);
 
 	/* Create the task that prints out the strings sent to it from the interrupt
 	service routine.  This task is created at the higher priority of 2. */
-	xTaskCreate( vStringPrinter, "String", 240, NULL, 2, NULL );
+	xTaskCreate(vStringPrinter, (const signed char * const)"String", 240, NULL, 2, NULL);
 
 	/* Start the scheduler so the created tasks start executing. */
 	vTaskStartScheduler();
@@ -127,12 +127,13 @@ int main( void )
     /* If all is well we will never reach here as the scheduler will now be
     running the tasks.  If we do reach here then it is likely that there was
     insufficient heap memory available for a resource to be created. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-static void vIntegerGenerator( void *pvParameters )
+static void vIntegerGenerator(void *pvParameters)
 {
+	(void)pvParameters;
 portTickType xLastExecutionTime;
 unsigned portLONG ulValueToSend = 0;
 int i;
@@ -140,58 +141,59 @@ int i;
 	/* Initialize the variable used by the call to vTaskDelayUntil(). */
 	xLastExecutionTime = xTaskGetTickCount();
 
-	for( ;; )
+	while(1)
 	{
 		/* This is a periodic task.  Block until it is time to run again.
 		The task will execute every 200ms. */
-		vTaskDelayUntil( &xLastExecutionTime, 200 / portTICK_RATE_MS );
+		vTaskDelayUntil(&xLastExecutionTime, 200 / portTICK_RATE_MS);
 
 		/* Send an incrementing number to the queue five times.  These will be
 		read from the queue by the interrupt service routine.  A block time is
 		not specified. */
-		for( i = 0; i < 5; i++ )
+		for(i = 0; i < 5; i++)
 		{
-			xQueueSendToBack( xIntegerQueue, &ulValueToSend, 0 );
+			xQueueSendToBack(xIntegerQueue, &ulValueToSend, 0);
 			ulValueToSend++;
 		}
 
 		/* Force an interrupt so the interrupt service routine can read the
 		values from the queue. */
-		vPrintString( "Generator task - About to generate an interrupt.\n" );
+		vPrintString("Generator task - About to generate an interrupt.\r\n");
 		mainTRIGGER_INTERRUPT();
-		vPrintString( "Generator task - Interrupt generated.\n\n" );
+		vPrintString("Generator task - Interrupt generated.\r\n\n");
 	}
 }
 /*-----------------------------------------------------------*/
 
-static void vStringPrinter( void *pvParameters )
+static void vStringPrinter(void *pvParameters)
 {
+	(void)pvParameters;
 char *pcString;
 
-	for( ;; )
+	while(1)
 	{
 		/* Block on the queue to wait for data to arrive. */
-		xQueueReceive( xStringQueue, &pcString, portMAX_DELAY );
+		xQueueReceive(xStringQueue, &pcString, portMAX_DELAY);
 
 		/* Print out the string received. */
-		vPrintString( pcString );
+		vPrintString(pcString);
 	}
 }
 /*-----------------------------------------------------------*/
 
-static void prvSetupSoftwareInterrupt( void )
+static void prvSetupSoftwareInterrupt(void)
 {
 	/* The interrupt service routine uses an (interrupt safe) FreeRTOS API
 	function so the interrupt priority must be at or below the priority defined
 	by configSYSCALL_INTERRUPT_PRIORITY. */
-	NVIC_SetPriority( mainSW_INTERRUPT_ID, mainSOFTWARE_INTERRUPT_PRIORITY );
+	NVIC_SetPriority(mainSW_INTERRUPT_ID, mainSOFTWARE_INTERRUPT_PRIORITY);
 
 	/* Enable the interrupt. */
-	NVIC_EnableIRQ( mainSW_INTERRUPT_ID );
+	NVIC_EnableIRQ(mainSW_INTERRUPT_ID);
 }
 /*-----------------------------------------------------------*/
 
-void vSoftwareInterruptHandler( void )
+void vSoftwareInterruptHandler(void)
 {
 portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 static unsigned long ulReceivedNumber;
@@ -201,20 +203,20 @@ interrupt service routine stack, and exist even when the interrupt service routi
 is not executing. */
 static const char *pcStrings[] =
 {
-    "String 0\n",
-    "String 1\n",
-    "String 2\n",
-    "String 3\n"
+    "String 0\r\n",
+    "String 1\r\n",
+    "String 2\r\n",
+    "String 3\r\n"
 };
 
     /* Loop until the queue is empty. */
-    while( xQueueReceiveFromISR( xIntegerQueue, &ulReceivedNumber, &xHigherPriorityTaskWoken ) != errQUEUE_EMPTY )
+    while(xQueueReceiveFromISR(xIntegerQueue, &ulReceivedNumber, &xHigherPriorityTaskWoken) != errQUEUE_EMPTY)
     {
         /* Truncate the received value to the last two bits (values 0 to 3 inc.), then
         send the string    that corresponds to the truncated value to the other
         queue. */
         ulReceivedNumber &= 0x03;
-        xQueueSendToBackFromISR( xStringQueue, &pcStrings[ ulReceivedNumber ], &xHigherPriorityTaskWoken );
+        xQueueSendToBackFromISR(xStringQueue, &pcStrings[ ulReceivedNumber ], &xHigherPriorityTaskWoken);
     }
 
     /* Clear the software interrupt bit using the interrupt controllers
@@ -231,30 +233,32 @@ static const char *pcStrings[] =
     FreeRTOS ports.  The portEND_SWITCHING_ISR() macro is provided as part of
     the Cortex M3 port layer for this purpose.  taskYIELD() must never be called
     from an ISR! */
-    portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+    portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationMallocFailedHook( void )
+void vApplicationMallocFailedHook(void)
 {
 	/* This function will only be called if an API call to create a task, queue
 	or semaphore fails because there is too little heap RAM remaining - and
 	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed char *pcTaskName )
+void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 {
+	(void)pxTask;
+	(void)pcTaskName;
 	/* This function will only be called if a task overflows its stack.  Note
 	that stack overflow checking does slow down the context switch
 	implementation and will only be performed if configCHECK_FOR_STACK_OVERFLOW
 	is set to either 1 or 2 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationIdleHook( void )
+void vApplicationIdleHook(void)
 {
 	/* This example does not use the idle hook to perform any processing.  The
 	idle hook will only be called if configUSE_IDLE_HOOK is set to 1 in 
@@ -262,7 +266,7 @@ void vApplicationIdleHook( void )
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationTickHook( void )
+void vApplicationTickHook(void)
 {
 	/* This example does not use the tick hook to perform any processing.   The
 	tick hook will only be called if configUSE_TICK_HOOK is set to 1 in

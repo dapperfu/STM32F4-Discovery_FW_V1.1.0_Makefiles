@@ -35,7 +35,7 @@
 /* System includes */
 #include <stdio.h>
 #include <stdint.h>
-#include <cross_studio_io.h>
+
 
 /* CMSIS / hardware includes */
 #include "system_stm32f4xx.h"
@@ -44,6 +44,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
+#include "debug.h"
 
 /* Demo includes. */
 #include "basic_io.h"
@@ -54,13 +55,13 @@
 /* The interrupt number to use for the software interrupt generation.  This
 could be any unused number.  In this case the first chip level (non system)
 interrupt is used, which happens to be windowed watchdog (WWDG) on the STM32F407. */
-#define mainSW_INTERRUPT_ID		( ( IRQn_Type ) 0 )
+#define mainSW_INTERRUPT_ID		((IRQn_Type) 0)
 
 /* Macro to force an interrupt. */
-#define mainTRIGGER_INTERRUPT()	NVIC_SetPendingIRQ( mainSW_INTERRUPT_ID )
+#define mainTRIGGER_INTERRUPT()	NVIC_SetPendingIRQ(mainSW_INTERRUPT_ID)
 
 /* Macro to clear the same interrupt. */
-#define mainCLEAR_INTERRUPT()	NVIC_ClearPendingIRQ( mainSW_INTERRUPT_ID )
+#define mainCLEAR_INTERRUPT()	NVIC_ClearPendingIRQ(mainSW_INTERRUPT_ID)
 
 /* The priority of the software interrupt.  The interrupt service routine uses
 an (interrupt safe) FreeRTOS API function, so the priority of the interrupt must
@@ -68,18 +69,18 @@ be equal to or lower than the priority set by
 configMAX_SYSCALL_INTERRUPT_PRIORITY - remembering that on the Cortex M3 high
 numeric values represent low priority values, which can be confusing as it is
 counter intuitive. */
-#define mainSOFTWARE_INTERRUPT_PRIORITY 		( 5 )
+#define mainSOFTWARE_INTERRUPT_PRIORITY 		(5)
 
 /* The tasks to be created. */
-static void vHandlerTask( void *pvParameters );
-static void vPeriodicTask( void *pvParameters );
+static void vHandlerTask(void *pvParameters);
+static void vPeriodicTask(void *pvParameters);
 
 /* Enable the software interrupt and set its priority. */
-static void prvSetupSoftwareInterrupt( void );
+static void prvSetupSoftwareInterrupt(void);
 
 /* The service routine for the interrupt.  This is the interrupt that the
 task will be synchronized with. */
-void vSoftwareInterruptHandler( void );
+void vSoftwareInterruptHandler(void);
 
 /*-----------------------------------------------------------*/
 
@@ -89,22 +90,21 @@ xSemaphoreHandle xCountingSemaphore;
 
 /*-----------------------------------------------------------*/
 
-int main( void )
+int main(void)
 {
 	/* System Initialization. */
 	SystemInit();
 	SystemCoreClockUpdate();
-
-	debug_printf("Example: 13\n");
-	debug_printf("System Core Clock is running at: %dMHz\n",SystemCoreClock/1000000);
+	// Create the debug task & print example number and system core clock.
+	vDebugInit(13);
 
     /* Before a semaphore is used it must be explicitly created.  In this example
 	a counting semaphore is created.  The semaphore is created to have a maximum
 	count value of 10, and an initial count value of 0. */
-    xCountingSemaphore = xSemaphoreCreateCounting( 10, 0 );
+    xCountingSemaphore = xSemaphoreCreateCounting(10, 0);
 
 	/* Check the semaphore was created successfully. */
-	if( xCountingSemaphore != NULL )
+	if(xCountingSemaphore != NULL)
 	{
     	/* Enable the software interrupt and set its priority. */
     	prvSetupSoftwareInterrupt();
@@ -113,12 +113,12 @@ int main( void )
 		with the interrupt.  The handler task is created with a high priority to
 		ensure it runs immediately after the interrupt exits.  In this case a
 		priority of 3 is chosen. */
-		xTaskCreate( vHandlerTask, "Handler", 240, NULL, 3, NULL );
+		xTaskCreate(vHandlerTask, (const signed char * const)"Handler", 240, NULL, 3, NULL);
 
 		/* Create the task that will periodically generate a software interrupt.
 		This is created with a priority below the handler task to ensure it will
 		get preempted each time the handler task exist the Blocked state. */
-		xTaskCreate( vPeriodicTask, "Periodic", 240, NULL, 1, NULL );
+		xTaskCreate(vPeriodicTask, (const signed char * const)"Periodic", 240, NULL, 1, NULL);
 
 		/* Start the scheduler so the created tasks start executing. */
 		vTaskStartScheduler();
@@ -127,60 +127,62 @@ int main( void )
     /* If all is well we will never reach here as the scheduler will now be
     running the tasks.  If we do reach here then it is likely that there was
     insufficient heap memory available for a resource to be created. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-static void vHandlerTask( void *pvParameters )
+static void vHandlerTask(void *pvParameters)
 {
+	(void)pvParameters;
 	/* As per most tasks, this task is implemented within an infinite loop. */
-	for( ;; )
+	while(1)
 	{
 		/* Use the semaphore to wait for the event.  The semaphore was created
 		before the scheduler was started so before this task ran for the first
 		time.  The task blocks indefinitely meaning this function call will only
 		return once the semaphore has been successfully obtained - so there is no
 		need to check the returned value. */
-		xSemaphoreTake( xCountingSemaphore, portMAX_DELAY );
+		xSemaphoreTake(xCountingSemaphore, portMAX_DELAY);
 
 		/* To get here the event must have occurred.  Process the event (in this
 		case we just print out a message). */
-		vPrintString( "Handler task - Processing event.\n" );
+		vPrintString("Handler task - Processing event.\r\n");
 	}
 }
 /*-----------------------------------------------------------*/
 
-static void vPeriodicTask( void *pvParameters )
+static void vPeriodicTask(void *pvParameters)
 {
+	(void)pvParameters;
 	/* As per most tasks, this task is implemented within an infinite loop. */
-	for( ;; )
+	while(1)
 	{
 		/* This task is just used to 'simulate' an interrupt.  This is done by
 		periodically generating a software interrupt. */
-		vTaskDelay( 500 / portTICK_RATE_MS );
+		vTaskDelay(500 / portTICK_RATE_MS);
 
 		/* Generate the interrupt, printing a message both before hand and
 		afterwards so the sequence of execution is evident from the output. */
-        vPrintString( "Periodic task - About to generate an interrupt.\n" );
+        vPrintString("Periodic task - About to generate an interrupt.\r\n");
         mainTRIGGER_INTERRUPT();
-		vPrintString( "Periodic task - Interrupt generated.\n\n" );
+		vPrintString("Periodic task - Interrupt generated.\r\n\n");
 	}
 }
 /*-----------------------------------------------------------*/
 
-static void prvSetupSoftwareInterrupt( void )
+static void prvSetupSoftwareInterrupt(void)
 {
 	/* The interrupt service routine uses an (interrupt safe) FreeRTOS API
 	function so the interrupt priority must be at or below the priority defined
 	by configSYSCALL_INTERRUPT_PRIORITY. */
-	NVIC_SetPriority( mainSW_INTERRUPT_ID, mainSOFTWARE_INTERRUPT_PRIORITY );
+	NVIC_SetPriority(mainSW_INTERRUPT_ID, mainSOFTWARE_INTERRUPT_PRIORITY);
 
 	/* Enable the interrupt. */
-	NVIC_EnableIRQ( mainSW_INTERRUPT_ID );
+	NVIC_EnableIRQ(mainSW_INTERRUPT_ID);
 }
 /*-----------------------------------------------------------*/
 
-void vSoftwareInterruptHandler( void )
+void vSoftwareInterruptHandler(void)
 {
 portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 
@@ -190,9 +192,9 @@ portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
 	events getting lost.  This simulates multiple interrupts being taken by the
 	processor, even though in this case the events are simulated within a single
 	interrupt occurrence.*/
-	xSemaphoreGiveFromISR( xCountingSemaphore, &xHigherPriorityTaskWoken );
-	xSemaphoreGiveFromISR( xCountingSemaphore, &xHigherPriorityTaskWoken );
-	xSemaphoreGiveFromISR( xCountingSemaphore, &xHigherPriorityTaskWoken );
+	xSemaphoreGiveFromISR(xCountingSemaphore, &xHigherPriorityTaskWoken);
+	xSemaphoreGiveFromISR(xCountingSemaphore, &xHigherPriorityTaskWoken);
+	xSemaphoreGiveFromISR(xCountingSemaphore, &xHigherPriorityTaskWoken);
 
     /* Clear the software interrupt bit using the interrupt controllers
     Clear Pending register. */
@@ -208,30 +210,32 @@ portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
     FreeRTOS ports.  The portEND_SWITCHING_ISR() macro is provided as part of
     the Cortex M3 port layer for this purpose.  taskYIELD() must never be called
     from an ISR! */
-    portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
+    portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationMallocFailedHook( void )
+void vApplicationMallocFailedHook(void)
 {
 	/* This function will only be called if an API call to create a task, queue
 	or semaphore fails because there is too little heap RAM remaining - and
 	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed char *pcTaskName )
+void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 {
+	(void)pxTask;
+	(void)pcTaskName;
 	/* This function will only be called if a task overflows its stack.  Note
 	that stack overflow checking does slow down the context switch
 	implementation and will only be performed if configCHECK_FOR_STACK_OVERFLOW
 	is set to either 1 or 2 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationIdleHook( void )
+void vApplicationIdleHook(void)
 {
 	/* This example does not use the idle hook to perform any processing.  The
 	idle hook will only be called if configUSE_IDLE_HOOK is set to 1 in 
@@ -239,7 +243,7 @@ void vApplicationIdleHook( void )
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationTickHook( void )
+void vApplicationTickHook(void)
 {
 	/* This example does not use the tick hook to perform any processing.   The
 	tick hook will only be called if configUSE_TICK_HOOK is set to 1 in

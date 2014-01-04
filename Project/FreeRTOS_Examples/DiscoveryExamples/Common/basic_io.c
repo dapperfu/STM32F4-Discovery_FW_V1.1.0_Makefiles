@@ -32,31 +32,34 @@
 
 /* Library includes. */
 #include <stdio.h>
-#include <cross_studio_io.h>
 
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
 #include "task.h"
+#include "debug.h"
 
-void vPrintString( const char *pcString )
+void vPrintString(const char *pcString)
 {
 	/* Print the string, suspending the scheduler as method of mutual
 	exclusion. */
 	vTaskSuspendAll();
 	{
-		debug_printf( pcString );
+		vDebugPrintf(pcString);
 	}
 	xTaskResumeAll();
 }
 /*-----------------------------------------------------------*/
 
-void vPrintStringAndNumber( const char *pcString, unsigned long ulValue )
+void vPrintStringAndNumber(const char *pcString, unsigned long ulValue)
 {
+	char test[255];
 	/* Print the string, suspending the scheduler as method of mutual
 	exclusion. */
 	vTaskSuspendAll();
 	{
-		debug_printf( "%s %u\n", pcString, ulValue );
+
+		vDebugPrintf(test);
+		vDebugPrintf("%s %f\r\n", pcString, ulValue);
 	}
 	xTaskResumeAll();
 }

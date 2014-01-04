@@ -35,7 +35,7 @@
 /* System includes */
 #include <stdio.h>
 #include <stdint.h>
-#include <cross_studio_io.h>
+
 
 /* CMSIS / hardware includes */
 #include "system_stm32f4xx.h"
@@ -43,12 +43,16 @@
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
 #include "task.h"
+#include "debug.h"
+
+/* Serial Support */
+#include "uart_support.h"
 
 /* Demo includes. */
 #include "basic_io.h"
 
 /* The task function. */
-void vTaskFunction( void *pvParameters );
+void vTaskFunction(void *pvParameters);
 
 /* A variable that is incremented by the idle task hook function. */
 static unsigned long ulIdleCycleCount = 0UL;
@@ -61,81 +65,82 @@ const char *pcTextForTask2 = "Task 2 is running, ulIdleCycleCount = ";
 
 /*-----------------------------------------------------------*/
 
-int main( void )
+int main(void)
 {
 	/* System Initialization. */
 	SystemInit();
 	SystemCoreClockUpdate();
-
-	debug_printf("Example: 7\n");
-	debug_printf("System Core Clock is running at: %dMHz\n",SystemCoreClock/1000000);
-
-	/* Create the first task at priority 1... */
-	xTaskCreate( vTaskFunction, "Task 1", 240, (void*)pcTextForTask1, 1, NULL );
+	// Create the debug task & print example number and system core clock.
+	vDebugInit(7);
+	
+	xTaskCreate(vTaskFunction, (const signed char * const)"Task 1", 240, (void*)pcTextForTask1, 1, NULL);
 
 	/* ... and the second task at priority 2.  The priority is the second to
 	last parameter. */
-	xTaskCreate( vTaskFunction, "Task 2", 240, (void*)pcTextForTask2, 2, NULL );
+	xTaskCreate(vTaskFunction, (const signed char * const)"Task 2", 240, (void*)pcTextForTask2, 2, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();
 
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vTaskFunction( void *pvParameters )
+void vTaskFunction(void *pvParameters)
 {
-char *pcTaskName;
+	(void)pvParameters;
+	char *pcTaskName;
 
 	/* The string to print out is passed in via the parameter.  Cast this to a
 	character pointer. */
-	pcTaskName = ( char * ) pvParameters;
+	pcTaskName = (char *) pvParameters;
 
 	/* As per most tasks, this task is implemented in an infinite loop. */
-	for( ;; )
+	while(1)
 	{
 		/* Print out the name of this task AND the number of times ulIdleCycleCount
         has been incremented. */
-		vPrintStringAndNumber( pcTaskName, ulIdleCycleCount );
+		vPrintStringAndNumber(pcTaskName, ulIdleCycleCount);
 
 		/* Delay for a period.  This time we use a call to vTaskDelay() which
 		puts the task into the Blocked state until the delay period has expired.
 		The delay period is specified in 'ticks'. */
-		vTaskDelay( 250 / portTICK_RATE_MS );
+		vTaskDelay(250 / portTICK_RATE_MS);
 	}
 }
 /*-----------------------------------------------------------*/
 
 /* Idle hook functions MUST be called vApplicationIdleHook(), take no parameters,
 and return void. */
-void vApplicationIdleHook( void )
+void vApplicationIdleHook(void)
 {
 	/* This hook function does nothing but increment a counter. */
 	ulIdleCycleCount++;
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationMallocFailedHook( void )
+void vApplicationMallocFailedHook(void)
 {
 	/* This function will only be called if an API call to create a task, queue
 	or semaphore fails because there is too little heap RAM remaining - and
 	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed char *pcTaskName )
+void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 {
+	(void)pxTask;
+	(void)pcTaskName;
 	/* This function will only be called if a task overflows its stack.  Note
 	that stack overflow checking does slow down the context switch
 	implementation and will only be performed if configCHECK_FOR_STACK_OVERFLOW
 	is set to either 1 or 2 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationTickHook( void )
+void vApplicationTickHook(void)
 {
 	/* This example does not use the tick hook to perform any processing.   The
 	tick hook will only be called if configUSE_TICK_HOOK is set to 1 in

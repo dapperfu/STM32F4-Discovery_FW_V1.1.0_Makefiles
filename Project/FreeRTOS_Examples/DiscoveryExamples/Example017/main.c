@@ -25,7 +25,6 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include <cross_studio_io.h>
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -33,12 +32,14 @@
 #include "stm32f4xx_rcc.h"
 #include "stm32f4xx_gpio.h"
 
+#include "debug.h"
+
 #define	TASK_LOOP	for (;;)
 
 static void trace(const char* str)
 {
 	vTaskSuspendAll();
-	debug_printf(str);
+	vDebugPrintf(str);
 	xTaskResumeAll();
 }
 
@@ -47,7 +48,8 @@ static void trace(const char* str)
 //
 static void LED_orange(void *pvParameters)
 {
-	trace("Task: LED_orange started\n");
+	(void)pvParameters;
+	trace("Task: LED_orange started\r\n");
     GPIO_ResetBits(GPIOD, GPIO_Pin_13);
 
 	TASK_LOOP {
@@ -61,7 +63,8 @@ static void LED_orange(void *pvParameters)
 //
 static void LED_green(void *pvParameters)
 {
-	trace("Task: LED_green started\n");
+	(void)pvParameters;
+	trace("Task: LED_green started\r\n");
 	GPIO_ResetBits(GPIOD, GPIO_Pin_12);
 
 	TASK_LOOP {
@@ -75,7 +78,8 @@ static void LED_green(void *pvParameters)
 //
 static void LED_red(void *pvParameters)
 {
-	trace("Task: LED_red started\n");
+	(void)pvParameters;
+	trace("Task: LED_red started\r\n");
 	GPIO_ResetBits(GPIOD, GPIO_Pin_14);
 
 	TASK_LOOP {
@@ -89,7 +93,8 @@ static void LED_red(void *pvParameters)
 //
 static void LED_blue(void *pvParameters)
 {
-	trace("Task: LED_blue started\n");
+	(void)pvParameters;
+	trace("Task: LED_blue started\r\n");
 	GPIO_ResetBits(GPIOD, GPIO_Pin_15);
 
 	TASK_LOOP {
@@ -116,9 +121,8 @@ int main(void)
 	/* System Initialization. */
 	SystemInit();
 	SystemCoreClockUpdate();
-
-	debug_printf("Example: 17\n");
-	debug_printf("System Core Clock is running at: %dMHz\n",SystemCoreClock/1000000);
+	// Create the debug task & print example number and system core clock.
+	vDebugInit(17);
 
 	IO_Init();
 
@@ -126,6 +130,7 @@ int main(void)
 	xTaskCreate(LED_green,  (signed char*)"Green",  128, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(LED_red,    (signed char*)"Red",    128, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(LED_blue,   (signed char*)"Blue",   128, NULL, tskIDLE_PRIORITY+1, NULL);
-	debug_printf("Scheduler started\n");
+	vDebugPrintf("Scheduler started\r\n");
 	vTaskStartScheduler();
+	return (int)NULL;
 }

@@ -35,7 +35,7 @@
 /* System includes */
 #include <stdio.h>
 #include <stdint.h>
-#include <cross_studio_io.h>
+
 
 /* CMSIS / hardware includes */
 #include "system_stm32f4xx.h"
@@ -43,27 +43,27 @@
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"
 #include "task.h"
+#include "debug.h"
 
 /* Demo includes. */
 #include "basic_io.h"
 
 /* The two task functions. */
-void vTask1( void *pvParameters );
-void vTask2( void *pvParameters );
+void vTask1(void *pvParameters);
+void vTask2(void *pvParameters);
 
 /* Used to hold the handle of Task2. */
 xTaskHandle xTask2Handle;
 
 /*-----------------------------------------------------------*/
 
-int main( void )
+int main(void)
 {
 	/* System Initialization. */
 	SystemInit();
 	SystemCoreClockUpdate();
-
-	debug_printf("Example: 9\n");
-	debug_printf("System Core Clock is running at: %dMHz\n",SystemCoreClock/1000000);
+	// Create the debug task & print example number and system core clock.
+	vDebugInit(9);
 
 	/* Note that this project uses the heap_2.c sample memory allocator, as
 	this implements vPortFree() as well as pvPortMalloc().  The free function
@@ -72,70 +72,74 @@ int main( void )
 	Create the first task at priority 1.  This time the task parameter is
 	not used and is set to NULL.  The task handle is also not used so likewise 
 	is also set to NULL. */
-	xTaskCreate( vTask1, "Task 1", 240, NULL, 1, NULL );
+	xTaskCreate(vTask1, (const signed char * const)"Task 1", 240, NULL, 1, NULL);
          /* The task is created at priority 1 ^. */
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();	
 	
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vTask1( void *pvParameters )
+void vTask1(void *pvParameters)
 {
+	(void)pvParameters;
 const portTickType xDelay100ms = 100 / portTICK_RATE_MS;
 
-	for( ;; )
+	while(1)
 	{
 		/* Print out the name of this task. */
-		vPrintString( "Task1 is running\n" );
+		vPrintString("Task1 is running\r\n");
 
 		/* Create task 2 at a higher priority.  Again the task parameter is not 
 		used so is set to NULL - BUT this time we want to obtain a handle to the 
 		task so pass in the address of the xTask2Handle variable. */
-		xTaskCreate( vTask2, "Task 2", 240, NULL, 2, &xTask2Handle );
+		xTaskCreate(vTask2, (const signed char * const)"Task 2", 240, NULL, 2, &xTask2Handle);
 			/* The task handle is the last parameter ^^^^^^^^^^^^^ */
 
 		/* Task2 has/had the higher priority, so for Task1 to reach here Task2
 		must have already executed and deleted itself.  Delay for 100 
 		milliseconds. */
-		vTaskDelay( xDelay100ms );
+		vTaskDelay(xDelay100ms);
 	}
 }
 
 /*-----------------------------------------------------------*/
 
-void vTask2( void *pvParameters )
+void vTask2(void *pvParameters)
 {
+	(void)pvParameters;
 	/* Task2 does nothing but delete itself.  To do this it could call vTaskDelete()
 	using a NULL parameter, but instead and purely for demonstration purposes it
 	instead calls vTaskDelete() with its own task handle. */
-	vPrintString( "Task2 is running and about to delete itself\n" );
-	vTaskDelete( xTask2Handle );
+	vPrintString("Task2 is running and about to delete itself\r\n");
+	vTaskDelete(xTask2Handle);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationMallocFailedHook( void )
+void vApplicationMallocFailedHook(void)
 {
 	/* This function will only be called if an API call to create a task, queue
 	or semaphore fails because there is too little heap RAM remaining - and
 	configUSE_MALLOC_FAILED_HOOK is set to 1 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed char *pcTaskName )
+void vApplicationStackOverflowHook(xTaskHandle *pxTask, signed char *pcTaskName)
 {
+	(void)pxTask;
+	(void)pcTaskName;
 	/* This function will only be called if a task overflows its stack.  Note
 	that stack overflow checking does slow down the context switch
 	implementation and will only be performed if configCHECK_FOR_STACK_OVERFLOW
 	is set to either 1 or 2 in FreeRTOSConfig.h. */
-	for( ;; );
+	while(1);
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationIdleHook( void )
+void vApplicationIdleHook(void)
 {
 	/* This example does not use the idle hook to perform any processing.  The
 	idle hook will only be called if configUSE_IDLE_HOOK is set to 1 in 
@@ -143,7 +147,7 @@ void vApplicationIdleHook( void )
 }
 /*-----------------------------------------------------------*/
 
-void vApplicationTickHook( void )
+void vApplicationTickHook(void)
 {
 	/* This example does not use the tick hook to perform any processing.   The
 	tick hook will only be called if configUSE_TICK_HOOK is set to 1 in
