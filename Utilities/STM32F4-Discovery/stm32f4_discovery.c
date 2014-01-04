@@ -44,6 +44,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4_discovery.h"
 
+#include "stm32f4xx_dma.h"
+#include "stm32f4xx_exti.h"
+#include "stm32f4xx_sdio.h"
 /** @addtogroup Utilities
   * @{
   */ 
@@ -437,6 +440,7 @@ void SD_LowLevel_Init(void)
   */
 void SD_LowLevel_DMA_TxConfig(uint32_t *BufferSRC, uint32_t BufferSize)
 {
+  (void)BufferSize;
   DMA_InitTypeDef SDDMA_InitStructure;
 
   DMA_ClearFlag(SD_SDIO_DMA_STREAM, SD_SDIO_DMA_FLAG_FEIF | SD_SDIO_DMA_FLAG_DMEIF | SD_SDIO_DMA_FLAG_TEIF | SD_SDIO_DMA_FLAG_HTIF | SD_SDIO_DMA_FLAG_TCIF);
@@ -479,6 +483,7 @@ void SD_LowLevel_DMA_TxConfig(uint32_t *BufferSRC, uint32_t BufferSize)
   */
 void SD_LowLevel_DMA_RxConfig(uint32_t *BufferDST, uint32_t BufferSize)
 {
+  (void)BufferSize;
   DMA_InitTypeDef SDDMA_InitStructure;
 
   DMA_ClearFlag(SD_SDIO_DMA_STREAM, SD_SDIO_DMA_FLAG_FEIF | SD_SDIO_DMA_FLAG_DMEIF | SD_SDIO_DMA_FLAG_TEIF | SD_SDIO_DMA_FLAG_HTIF | SD_SDIO_DMA_FLAG_TCIF);
