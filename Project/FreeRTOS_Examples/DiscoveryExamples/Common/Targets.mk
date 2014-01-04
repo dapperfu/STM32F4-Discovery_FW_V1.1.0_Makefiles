@@ -37,6 +37,7 @@ STM32_INCLUDES+= $(COMMON)
 SRC = main.c
 SRC+= $(COMMON)/basic_io.c
 SRC+= $(COMMON)/uart_support.c
+SRC+= $(COMMON)/utils.c
 SRC+= $(COMMON)/debug.c
 SRC+= $(COMMON)/system_stm32f4xx.c
 SRC+= $(FREERTOS)/croutine.c

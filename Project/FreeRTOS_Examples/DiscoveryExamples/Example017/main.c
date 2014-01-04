@@ -33,6 +33,7 @@
 #include "stm32f4xx_gpio.h"
 
 #include "debug.h"
+#include "utils.h"
 
 #define	TASK_LOOP	for (;;)
 
@@ -123,14 +124,13 @@ int main(void)
 	SystemCoreClockUpdate();
 	// Create the debug task & print example number and system core clock.
 	vDebugInit(17);
-
 	IO_Init();
-
+	
 	xTaskCreate(LED_orange, (signed char*)"Orange", 128, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(LED_green,  (signed char*)"Green",  128, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(LED_red,    (signed char*)"Red",    128, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(LED_blue,   (signed char*)"Blue",   128, NULL, tskIDLE_PRIORITY+1, NULL);
-	vDebugPrintf("Scheduler started\r\n");
+	//vDebugPrintf("Scheduler started\r\n");
 	vTaskStartScheduler();
 	return (int)NULL;
 }

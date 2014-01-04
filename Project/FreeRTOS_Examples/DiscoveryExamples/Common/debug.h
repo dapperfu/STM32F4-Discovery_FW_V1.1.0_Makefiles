@@ -15,6 +15,6 @@ void vDebugString( char *s );
 void vDebugPrintf(const char *fmt, ...);
 void vDebugPrintResetType( void );
 
-#define mainDEBUG_TASK_PRIORITY     (tskIDLE_PRIORITY + 10)
+#define mainDEBUG_TASK_PRIORITY     (tskIDLE_PRIORITY+4)
 
 #endif /* DEBUG_H_ */

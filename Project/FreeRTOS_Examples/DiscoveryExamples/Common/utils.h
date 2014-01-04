@@ -11,9 +11,9 @@
 void HwInit( void );
 void TIM3_Config(void);
 void TIM4_Config(void);
-void TIM_SetDuty( TIM_TypeDef* TIMx, uint8_t chan_bitfield, uint16_t duty );
-void vUSART2_Init( void );
-uint16_t ptopwm( uint8_t p );
+void TIM_SetDuty(TIM_TypeDef* TIMx, uint8_t chan_bitfield, uint16_t duty);
+void vUSART2_Init(void);
+uint16_t ptopwm(uint8_t p);
 
 #define DOUBLECLICK_Z                    ((uint8_t)0x60)
 #define SINGLECLICK_Z                    ((uint8_t)0x50)

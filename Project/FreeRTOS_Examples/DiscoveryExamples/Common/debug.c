@@ -24,12 +24,14 @@
 void vNum2String(char *s, uint8_t *pPos, uint32_t u32Number, uint8_t u8Base);
 
 // Total buffer size for all debug messages.
-#define DEBUG_QUEUE_SIZE	128
+#define DEBUG_QUEUE_SIZE	1024
 xQueueHandle xDebugQueue;
 
 extern xTaskHandle hDebugTask;
 
-void vDebugInit(int exampleNum) {
+void vDebugInit(int exampleNum) {	
+	vUSART2_Init();
+	vDebugInitQueue();
 	xTaskCreate((pdTASK_CODE)vDebugTask, (const signed char * const)"DEBUG", (unsigned short)configMINIMAL_STACK_SIZE, NULL, (unsigned portBASE_TYPE)mainDEBUG_TASK_PRIORITY, (xTaskHandle)NULL);
 	// Clear the screen.
 	vDebugPrintf("\e[2J\e[H");
@@ -97,12 +99,6 @@ void vDebugTask(void *pvParameters) {
 			// Print out how much stack space remains on each task stack.
 			case 's':
 				vDebugPrintf("Remaining space on Task Stack:\r\n");
-				//u16StackSize = uxTaskGetStackHighWaterMark(hDebugTask);
-				//vDebugPrintf("Debug\t%d\r\n", u16StackSize);
-				//u16StackSize = uxTaskGetStackHighWaterMark(hTimeTask);
-				//vDebugPrintf("Time\t%d\r\n", u16StackSize);
-				//u16StackSize = uxTaskGetStackHighWaterMark(hLCDTask);
-				//vDebugPrintf("LCD\t%d\r\n", u16StackSize);
 				break;
 
 			// Add general test code here...

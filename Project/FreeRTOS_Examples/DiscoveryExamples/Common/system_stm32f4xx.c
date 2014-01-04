@@ -111,6 +111,9 @@
   */
 
 #include "stm32f4xx.h"
+#include "debug.h"
+#include "utils.h"
+#include "debug.h"
 
 /************************* PLL Parameters *************************************/
 #define	PLL_M	   8															// PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N
@@ -118,7 +121,6 @@
 #define	PLL_P	   2															// SYSCLK = PLL_VCO / PLL_P
 
 #define	PLL_Q	   7															// USB OTG FS, SDIO and RNG Clock =  PLL_VCO / PLLQ
-
 #define	PLLI2S_N   384															// PLLI2S_VCO = (HSE_VALUE Or HSI_VALUE / PLL_M) * PLLI2S_N
 #define	PLLI2S_R   2															// I2SCLK = PLLI2S_VCO / PLLI2S_R
 
@@ -154,6 +156,7 @@ void SystemInit(void)
 //	Set the system clock to 160MHz
 //
 	SetSysClock();
+
 }
 
 /**
@@ -216,7 +219,7 @@ void SystemCoreClockUpdate(void)
 		else
 			pllvco = (HSI_VALUE	/ pllm)	* ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >>	6);		 
 
-		pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1 ) *2;
+		pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1) *2;
 		SystemCoreClock =	pllvco/pllp;
 		break;
 
@@ -284,7 +287,7 @@ static void	SetSysClock(void)
 		RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));						//	Select the main PLL as system clock source
 		RCC->CFGR |= RCC_CFGR_SW_PLL;
 		
-		while ((RCC->CFGR &	(uint32_t)RCC_CFGR_SWS ) !=	RCC_CFGR_SWS_PLL);		//	Wait till the main PLL is used as system clock source
+		while ((RCC->CFGR &	(uint32_t)RCC_CFGR_SWS) !=	RCC_CFGR_SWS_PLL);		//	Wait till the main PLL is used as system clock source
 		{
 		}
 	}
