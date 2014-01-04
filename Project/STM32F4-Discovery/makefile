@@ -58,7 +58,7 @@ include $(STM32F4xx_StdPeriph_Driver)/STM32F4xx_StdPeriph_Driver.mk
 # 
 # Define project name and Ram/Flash mode here
 PROJECT        = test
-RUN_FROM_FLASH = 0
+RUN_FROM_FLASH = 1
 USE_HARD_FPU   = 1
 HEAP_SIZE      = 8192
 STACK_SIZE     = 2048
@@ -78,7 +78,7 @@ endif
 # Define FPU settings here
 #
 ifeq ($(USE_HARD_FPU), 0)
-FPU =
+FPU = -mfloat-abi=soft
 else
 FPU = -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__FPU_USED=1
 endif
@@ -174,6 +174,12 @@ clean:
 	-rm -f $(ASRC:.s=.s.bak)
 	-rm -f $(ASRC:.s=.lst)
 	-rm -fR .dep
+
+.PHONY: flash
+.SINGLESHELL: flash
+flash: all
+	@echo Flashing $(FULL_PRJ).hex
+	@C:\PROGRA~2\STMICR~1\STM32S~1\ST-LIN~1\ST-LIN~1.EXE -V -c SWD UR -P $(FULL_PRJ).hex -Rst
 
 # 
 # Include the dependency files, should be the last of the makefile
