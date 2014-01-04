@@ -34,6 +34,7 @@
 *                    newlib version 1.17.0
 *  03.06.2012  mifi  Changed _write_r and _sbrk_r. Added __putchar and use
 *                    __HeapLimit to check end of heap.
+*  02.02.2013  nifi  Added _exit, _kill and _getpid.
 ****************************************************************************/
 
 #include <stdlib.h>
@@ -151,7 +152,7 @@ int _fstat_r (struct _reent *r, int file, struct stat * st)
 
 /***************************************************************************/
 
-int _isatty_r(struct _reent *r, int fd)
+int _isatty_r (struct _reent *r, int fd)
 {
   r = r;
   fd = fd;
@@ -159,6 +160,33 @@ int _isatty_r(struct _reent *r, int fd)
   return 1;
 }
 
+/***************************************************************************/
+
+void _exit (int a)
+{
+  a = a;
+  
+  while(1) {};
+}
+
+/***************************************************************************/
+
+int _kill (int a, int b)
+{
+  a = a;
+  b = b;
+  
+  return 0;
+}
+
+/***************************************************************************/
+
+int _getpid(int a)
+{
+  a = a;
+  
+  return 0;
+}
+
+
 /*** EOF ***/
-
-
