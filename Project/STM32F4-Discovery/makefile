@@ -45,19 +45,12 @@ DLIBS =
 
 ##############################################################################################
 # Start of user section
+#
 
-## Folder Paths.
-# Relative path to STM32F4-Discovery-FW root.
-STMFIRM=../..
-# Discovery board path
-DISCOVERY=$(STMFIRM)/Utilities/STM32F4-Discovery
-# Standard Peripheral Driver Path
-STM32F4xx_StdPeriph_Driver=$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver
-# Makefile include with all peripheral driver files
-include $(STM32F4xx_StdPeriph_Driver)/STM32F4xx_StdPeriph_Driver.mk
 # 
 # Define project name and Ram/Flash mode here
 PROJECT        = test
+RUN_FROM_FLASH = 0
 USE_HARD_FPU   = 1
 HEAP_SIZE      = 8192
 STACK_SIZE     = 2048
@@ -65,14 +58,19 @@ STACK_SIZE     = 2048
 #
 # Define linker script file here
 #
+ifeq ($(RUN_FROM_FLASH), 0)
+LDSCRIPT = ./prj/stm32f4xx_ram.ld
+FULL_PRJ = $(PROJECT)_ram
+else
 LDSCRIPT = ./prj/stm32f4xxxg_flash.ld
-FULL_PRJ = $(PROJECT)
+FULL_PRJ = $(PROJECT)_rom
+endif
 
 #
 # Define FPU settings here
 #
 ifeq ($(USE_HARD_FPU), 0)
-FPU = -mfloat-abi=soft
+FPU =
 else
 FPU = -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__FPU_USED=1
 endif
@@ -87,9 +85,7 @@ UADEFS =
 # List C source files here
 SRC  = ./cmsis/device/system_stm32f4xx.c \
        ./src/syscalls.c \
-		$(DISCOVERY)/stm32f4_discovery.c \
-       ./src/main.c \
-		$(STM32F4xx_SRC)
+       ./src/main.c
 
 # List ASM source files here
 ASRC = ./cmsis/device/startup_stm32f4xx.s
@@ -97,9 +93,8 @@ ASRC = ./cmsis/device/startup_stm32f4xx.s
 # List all user directories here
 UINCDIR = ./inc \
           ./cmsis/core \
-          ./cmsis/device \
-		  $(DISCOVERY) \
-		  $(STM32F4xx_INC)
+          ./cmsis/device
+
 # List the user directory to look for the libraries here
 ULIBDIR =
 
@@ -168,12 +163,6 @@ clean:
 	-rm -f $(ASRC:.s=.s.bak)
 	-rm -f $(ASRC:.s=.lst)
 	-rm -fR .dep
-
-.PHONY: flash
-.SINGLESHELL: flash
-flash: all
-	@echo Flashing $(FULL_PRJ).hex
-	@C:\PROGRA~2\STMICR~1\STM32S~1\ST-LIN~1\ST-LIN~1.EXE -V -c SWD UR -P $(FULL_PRJ).hex -Rst
 
 # 
 # Include the dependency files, should be the last of the makefile

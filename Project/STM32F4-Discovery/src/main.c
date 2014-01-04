@@ -30,15 +30,12 @@
 ****************************************************************************
 *  History:
 *
-*  03.06.2012  mifi   First Version for the STM3240G-EVAL board.
-*  27.12.2012  mifi   Tested with STM32F4-Discovery too.
-*  04.01.2014  jafrey Added blinking LEDs to project for feedback.
+*  03.06.2012  mifi  First Version for the STM3240G-EVAL board.
+*  27.12.2012  mifi  Tested with STM32F4-Discovery too.
 ****************************************************************************/
 #define __MAIN_C__
 
 #include <stdint.h>
-#include <stdlib.h>
-#include "stm32f4_discovery.h"
 
 /*=========================================================================*/
 /*  DEFINE: All Structures and Common Constants                            */
@@ -68,56 +65,27 @@ static uint32_t       must_zero_after_startup;
 int main (void)
 {
   uint32_t a  = 1;
-  //uint32_t b  = 2;
+  uint32_t b  = 2;
   uint32_t c  = 0;
-  uint32_t i  = 0;
-  
   float    fa = 1.3f;
   float    fb = 2.7f;
   float    fc = 3.9f;
   
-  // Initialize the LEDs
-  STM_EVAL_LEDInit(LED4);
-  STM_EVAL_LEDInit(LED3);
-  STM_EVAL_LEDInit(LED5);
-  STM_EVAL_LEDInit(LED6);
-  
-  // Turn on LED3
-  STM_EVAL_LEDOn(LED3);
-  
   fa = fa + fd;
   a  = a + d + dd + must_zero_after_startup;
-
-  // Turn on LED4
-  STM_EVAL_LEDOn(LED4);
   
   /* A must be 16 here */
-  if (a != 16) while (1) 
-  {
-	// If all failed turn on the LED6 and turn off all others.
-	STM_EVAL_LEDOff(LED3);
-	STM_EVAL_LEDOff(LED4);
-	STM_EVAL_LEDOff(LED5);
-	STM_EVAL_LEDOn(LED6);
-  }
+  if (a != 16) while (1) {};
     
   while (1)
   {
-	fa=0.0f;
-	fb=0.0f;
-	/* 
-	 * Loop this n times. The frequency of the blinking is how fast it takes to
-	 * complete that many cycles. Can be used to benchmark FPU vs non-FPU
-	 */
-	for (i=0;i<1000000;i++) {		
-		fa++;
-		fb++;
-		
-		fa = fa + 2.6f;
-		fb = fb + 1.67f;
-		fc = fa + fb;
-	}
-	STM_EVAL_LEDToggle(LED6);
+    a++;
+    b++;
+    c = a + b;
+    
+    fa = fa + 2.6f;
+    fb = fb + 1.67f;
+    fc = fa + fb;
   }
 
   /*
