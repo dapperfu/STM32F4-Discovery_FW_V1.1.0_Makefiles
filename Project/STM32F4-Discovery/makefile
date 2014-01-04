@@ -45,8 +45,16 @@ DLIBS =
 
 ##############################################################################################
 # Start of user section
-#
 
+## Folder Paths.
+# Relative path to STM32F4-Discovery-FW root.
+STMFIRM=../..
+# Discovery board path
+DISCOVERY=$(STMFIRM)/Utilities/STM32F4-Discovery
+# Standard Peripheral Driver Path
+STM32F4xx_StdPeriph_Driver=$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver
+# Makefile include with all peripheral driver files
+include $(STM32F4xx_StdPeriph_Driver)/STM32F4xx_StdPeriph_Driver.mk
 # 
 # Define project name and Ram/Flash mode here
 PROJECT        = test
@@ -85,7 +93,9 @@ UADEFS =
 # List C source files here
 SRC  = ./cmsis/device/system_stm32f4xx.c \
        ./src/syscalls.c \
-       ./src/main.c
+		$(DISCOVERY)/stm32f4_discovery.c \
+       ./src/main.c \
+		$(STM32F4xx_SRC)
 
 # List ASM source files here
 ASRC = ./cmsis/device/startup_stm32f4xx.s
@@ -93,8 +103,9 @@ ASRC = ./cmsis/device/startup_stm32f4xx.s
 # List all user directories here
 UINCDIR = ./inc \
           ./cmsis/core \
-          ./cmsis/device
-
+          ./cmsis/device \
+		  $(DISCOVERY) \
+		  $(STM32F4xx_INC)
 # List the user directory to look for the libraries here
 ULIBDIR =
 

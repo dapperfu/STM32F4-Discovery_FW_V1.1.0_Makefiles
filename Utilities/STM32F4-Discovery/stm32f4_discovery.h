@@ -51,7 +51,9 @@
                                               
 /* Includes ------------------------------------------------------------------*/
  #include "stm32f4xx.h"
-   
+ #include "stm32f4xx_usart.h"
+ #include "stm32f4xx_exti.h"
+ #include "stm32f4xx_sdio.h"
 /** @addtogroup Utilities
   * @{
   */

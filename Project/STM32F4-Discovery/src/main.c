@@ -36,6 +36,7 @@
 #define __MAIN_C__
 
 #include <stdint.h>
+#include "stm32f4_discovery.h"
 
 /*=========================================================================*/
 /*  DEFINE: All Structures and Common Constants                            */
