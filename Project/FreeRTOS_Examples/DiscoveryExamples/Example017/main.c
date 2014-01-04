@@ -130,7 +130,7 @@ int main(void)
 	xTaskCreate(LED_green,  (signed char*)"Green",  128, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(LED_red,    (signed char*)"Red",    128, NULL, tskIDLE_PRIORITY+1, NULL);
 	xTaskCreate(LED_blue,   (signed char*)"Blue",   128, NULL, tskIDLE_PRIORITY+1, NULL);
-	//vDebugPrintf("Scheduler started\r\n");
+	vDebugPrintf("Scheduler started\r\n");
 	vTaskStartScheduler();
 	return (int)NULL;
 }

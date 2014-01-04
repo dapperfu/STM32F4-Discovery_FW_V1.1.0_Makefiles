@@ -75,7 +75,7 @@ int main(void)
 	xTaskCreate(vContinuousProcessingTask, (const signed char * const)"Task 2", 240, (void*)pcTextForTask2, 1, NULL);
 
 	/* Create one instance of the periodic task at priority 2. */
-	xTaskCreate(vPeriodicTask, (const signed char * const)"Task 3", 240, (void*)pcTextForPeriodicTask, 2, NULL);
+	//xTaskCreate(vPeriodicTask, (const signed char * const)"Task 3", 240, (void*)pcTextForPeriodicTask, 1, NULL);
 
 	/* Start the scheduler so our tasks start executing. */
 	vTaskStartScheduler();
@@ -134,8 +134,8 @@ void vPeriodicTask(void *pvParameters)
 		/* Print out the name of this task. */
 		vPrintString("Periodic task is running..........\r\n");
 
-		/* We want this task to execute exactly every 100 milliseconds. */
-		vTaskDelayUntil(&xLastWakeTime, (100 / portTICK_RATE_MS));
+		/* We want this task to execute exactly every 2000 milliseconds. */
+		vTaskDelayUntil(&xLastWakeTime, (2000 / portTICK_RATE_MS));
 	}
 }
 /*-----------------------------------------------------------*/

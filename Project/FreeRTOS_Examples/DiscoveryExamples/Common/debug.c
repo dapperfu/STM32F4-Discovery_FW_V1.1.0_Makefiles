@@ -87,15 +87,6 @@ void vDebugTask(void *pvParameters) {
 				//vSetAtoDDump(TRUE);
 				break;
 
-			case 'l':
-				vDebugPrintf("Loop Count Stopped.\r\n");
-				//vSetCntLoops(FALSE);
-				break;
-			case 'L':
-				vDebugPrintf("Loop Count Started.\r\n");
-				//vSetCntLoops(TRUE);
-				break;
-
 			// Print out how much stack space remains on each task stack.
 			case 's':
 				vDebugPrintf("Remaining space on Task Stack:\r\n");

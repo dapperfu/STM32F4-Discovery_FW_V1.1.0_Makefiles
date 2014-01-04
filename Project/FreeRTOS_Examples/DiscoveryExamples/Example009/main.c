@@ -85,7 +85,7 @@ int main(void)
 void vTask1(void *pvParameters)
 {
 	(void)pvParameters;
-const portTickType xDelay100ms = 100 / portTICK_RATE_MS;
+	const portTickType xDelay100ms = 1000 / portTICK_RATE_MS;
 
 	while(1)
 	{

@@ -50,16 +50,13 @@ void vPrintString(const char *pcString)
 }
 /*-----------------------------------------------------------*/
 
-void vPrintStringAndNumber(const char *pcString, unsigned long ulValue)
+void vPrintStringAndNumber(const char *pcString, unsigned int ulValue)
 {
-	char test[255];
 	/* Print the string, suspending the scheduler as method of mutual
 	exclusion. */
 	vTaskSuspendAll();
 	{
-
-		vDebugPrintf(test);
-		vDebugPrintf("%s %f\r\n", pcString, ulValue);
+		vDebugPrintf("%s %d\r\n", pcString, ulValue);
 	}
 	xTaskResumeAll();
 }
