@@ -1,16 +1,16 @@
 /**
   ******************************************************************************
-  * @file      startup_stm32f40_41xxx.s
+  * @file      startup_stm32f427_437xx.s
   * @author    MCD Application Team
   * @version   V1.3.0
   * @date      08-November-2013
-  * @brief     STM32F40xxx/41xxx Devices vector table for Atollic TrueSTUDIO toolchain.   
+  * @brief     STM32F427xx/437xx Devices vector table for RIDE7 toolchain.          
   *            This module performs:
   *                - Set the initial SP
   *                - Set the initial PC == Reset_Handler,
   *                - Set the vector table entries with the exceptions ISR address
   *                - Configure the clock system and the external SRAM mounted on 
-  *                  STM324xG-EVAL board to be used as data memory (optional, 
+  *                  STM324x7I-EVAL board to be used as data memory (optional, 
   *                  to be enabled by user)
   *                - Branches to main in the C library (which eventually
   *                  calls main()).
@@ -101,8 +101,6 @@ LoopFillZerobss:
 
 /* Call the clock system intitialization function.*/
   bl  SystemInit   
-/* Call static constructors */
-    bl __libc_init_array
 /* Call the application's entry point.*/
   bl  main
   bx  lr    
@@ -232,8 +230,17 @@ g_pfnVectors:
   .word     DCMI_IRQHandler                   /* DCMI                         */                   
   .word     CRYP_IRQHandler                   /* CRYP crypto                  */                   
   .word     HASH_RNG_IRQHandler               /* Hash and Rng                 */
-  .word     FPU_IRQHandler                    /* FPU                          */
-                        
+  .word     FPU_IRQHandler                    /* FPU                          */                         
+  .word     UART7_IRQHandler                  /* UART7                        */
+  .word     UART8_IRQHandler                  /* UART8                        */
+  .word     SPI4_IRQHandler                   /* SPI4                         */
+  .word     SPI5_IRQHandler                   /* SPI5                         */
+  .word     SPI6_IRQHandler                   /* SPI6                         */
+  .word     SAI1_IRQHandler                   /* SAI1                         */
+  .word     LTDC_IRQHandler                   /* LTDC                         */
+  .word     LTDC_ER_IRQHandler                /* LTDC error                   */
+  .word     DMA2D_IRQHandler                  /* DMA2D                        */
+                              
 /*******************************************************************************
 *
 * Provide weak aliases for each Exception handler to the Default_Handler. 
@@ -512,6 +519,33 @@ g_pfnVectors:
    .thumb_set HASH_RNG_IRQHandler,Default_Handler   
 
    .weak      FPU_IRQHandler                  
-   .thumb_set FPU_IRQHandler,Default_Handler  
+   .thumb_set FPU_IRQHandler,Default_Handler 
+   
+   .weak      UART7_IRQHandler                  
+   .thumb_set UART7_IRQHandler,Default_Handler                   
+   
+   .weak      UART8_IRQHandler                  
+   .thumb_set UART8_IRQHandler,Default_Handler 
+   
+   .weak      SPI4_IRQHandler                   
+   .thumb_set SPI4_IRQHandler,Default_Handler 
+   
+   .weak      SPI5_IRQHandler                   
+   .thumb_set SPI5_IRQHandler,Default_Handler 
+   
+   .weak      SPI6_IRQHandler
+   .thumb_set SPI6_IRQHandler,Default_Handler
+   
+   .weak      SAI1_IRQHandler
+   .thumb_set SAI1_IRQHandler,Default_Handler 
+   
+   .weak      LTDC_IRQHandler
+   .thumb_set LTDC_IRQHandler,Default_Handler 
+   
+   .weak      LTDC_ER_IRQHandler
+   .thumb_set LTDC_ER_IRQHandler,Default_Handler 
+   
+   .weak      DMA2D_IRQHandler
+   .thumb_set DMA2D_IRQHandler,Default_Handler                    
    
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

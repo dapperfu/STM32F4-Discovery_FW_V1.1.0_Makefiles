@@ -2,16 +2,16 @@
   ******************************************************************************
   * @file      startup_stm32f427x.s
   * @author    MCD Application Team
-  * @version   V1.2.0
-  * @date      11-September-2013
-  * @brief     STM32F42xxx/43xxx Devices vector table for RIDE7 toolchain.
-  *            Same as startup_stm32f42_43xxx.s and maintained for legacy purpose              
+  * @version   V1.3.0
+  * @date      08-November-2013
+  * @brief     STM32F427xx/437xx Devices vector table for RIDE7 toolchain.
+  *            Same as startup_stm32f427_437xx.s and maintained for legacy purpose              
   *            This module performs:
   *                - Set the initial SP
   *                - Set the initial PC == Reset_Handler,
   *                - Set the vector table entries with the exceptions ISR address
   *                - Configure the clock system and the external SRAM mounted on 
-  *                  STM324x9I-EVAL or STM324x7I-EVAL board to be used as data memory 
+  *                  STM324x7I-EVAL board to be used as data memory 
   *                  (optional, to be enabled by user)
   *                - Branches to main in the C library (which eventually
   *                  calls main()).

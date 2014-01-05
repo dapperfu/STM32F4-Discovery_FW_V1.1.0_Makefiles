@@ -1,8 +1,8 @@
 ;******************** (C) COPYRIGHT 2013 STMicroelectronics ********************
 ;* File Name          : startup_stm32f401xx.s
 ;* Author             : MCD Application Team
-;* Version            : V1.2.0
-;* Date               : 11-September-2013
+;* Version            : V1.3.0
+;* Date               : 08-November-2013
 ;* Description        : STM32F401xx devices vector table for MDK-ARM toolchain. 
 ;*                      This module performs:
 ;*                      - Set the initial SP
@@ -164,6 +164,9 @@ __Vectors       DCD     __initial_sp               ; Top of Stack
                 DCD     0                                 ; Reserved                                     
                 DCD     0                                 ; Reserved 
                 DCD     FPU_IRQHandler                    ; FPU
+                DCD     0                                 ; Reserved  
+                DCD     0                                 ; Reserved  
+                DCD     SPI4_IRQHandler                   ; SPI4
                                          
 __Vectors_End
 
@@ -284,6 +287,7 @@ Default_Handler PROC
                 EXPORT  I2C3_EV_IRQHandler                [WEAK]                                              
                 EXPORT  I2C3_ER_IRQHandler                [WEAK]                                              
                 EXPORT  FPU_IRQHandler                    [WEAK]
+                EXPORT  SPI4_IRQHandler                   [WEAK]
 
 WWDG_IRQHandler                                                       
 PVD_IRQHandler                                      
@@ -341,6 +345,7 @@ USART6_IRQHandler
 I2C3_EV_IRQHandler                                                          
 I2C3_ER_IRQHandler                                                          
 FPU_IRQHandler
+SPI4_IRQHandler 
    
                 B       .
 

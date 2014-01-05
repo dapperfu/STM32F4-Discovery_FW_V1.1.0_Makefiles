@@ -1,8 +1,8 @@
 ;/******************** (C) COPYRIGHT 2013 STMicroelectronics ********************
 ;* File Name          : startup_stm32f401x.s
 ;* Author             : MCD Application Team
-;* Version            : V1.2.0
-;* Date               : 11-September-2013
+;* Version            : V1.3.0
+;* Date               : 08-November-2013
 ;* Description        : STM32F401xx devices vector table for EWARM toolchain.
 ;*                      This module performs:
 ;*                      - Set the initial SP
@@ -160,6 +160,9 @@ __vector_table
         DCD     0                                 ; Reserved                                     
         DCD     0                                 ; Reserved
         DCD     FPU_IRQHandler                    ; FPU
+        DCD     0                                 ; Reserved                                          
+        DCD     0                                 ; Reserved  
+        DCD     SPI4_IRQHandler                   ; SPI4 
     
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -495,5 +498,10 @@ I2C3_ER_IRQHandler
 FPU_IRQHandler  
         B FPU_IRQHandler
 
+        PUBWEAK SPI4_IRQHandler
+        SECTION .text:CODE:REORDER(1)
+SPI4_IRQHandler  
+        B SPI4_IRQHandler
+        
         END
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

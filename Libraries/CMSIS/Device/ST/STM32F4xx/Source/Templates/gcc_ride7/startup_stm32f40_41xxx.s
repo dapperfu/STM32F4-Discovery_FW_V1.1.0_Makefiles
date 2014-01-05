@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file      startup_stm32f40_41xxx.s
   * @author    MCD Application Team
-  * @version   V1.2.0
-  * @date      11-September-2013
+  * @version   V1.3.0
+  * @date      08-November-2013
   * @brief     STM32F40xxx/41xxx Devices vector table for RIDE7 toolchain.          
   *            This module performs:
   *                - Set the initial SP
@@ -43,10 +43,6 @@
 
 .global  g_pfnVectors
 .global  Default_Handler
-
-.globl _exit
-_exit:
-    b     .
 
 /* start address for the initialization values of the .data section. 
 defined in linker script */

@@ -1,8 +1,8 @@
 ;/******************** (C) COPYRIGHT 2013 STMicroelectronics ********************
 ;* File Name          : startup_stm32f427x.s
 ;* Author             : MCD Application Team
-;* Version            : V1.2.0
-;* Date               : 11-September-2013
+;* Version            : V1.3.0
+;* Date               : 08-November-2013
 ;* Description        : STM32F427xx/437xx devices vector table for EWARM toolchain.
 ;*                      Same as startup_stm32f42_43xxx.s and maintained for legacy purpose
 ;*                      This module performs:

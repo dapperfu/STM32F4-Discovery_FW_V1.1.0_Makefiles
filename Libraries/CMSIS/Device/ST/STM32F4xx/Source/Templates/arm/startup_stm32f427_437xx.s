@@ -1,9 +1,9 @@
 ;******************** (C) COPYRIGHT 2013 STMicroelectronics ********************
 ;* File Name          : startup_stm32f427_437xx.s
 ;* Author             : MCD Application Team
-;* Version            : V1.2.0
-;* Date               : 11-September-2013
-;* Description        : STM32F42xxx/43xxx devices vector table for MDK-ARM toolchain. 
+;* Version            : V1.3.0
+;* Date               : 08-November-2013
+;* Description        : STM32F427xx/437xx devices vector table for MDK-ARM toolchain. 
 ;*                      This module performs:
 ;*                      - Set the initial SP
 ;*                      - Set the initial PC == Reset_Handler

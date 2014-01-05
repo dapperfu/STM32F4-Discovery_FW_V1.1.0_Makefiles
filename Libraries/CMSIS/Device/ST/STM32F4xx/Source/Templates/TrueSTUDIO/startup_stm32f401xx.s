@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file      startup_stm32f401xx.s
   * @author    MCD Application Team
-  * @version   V1.2.0
-  * @date      11-September-2013
+  * @version   V1.3.0
+  * @date      08-November-2013
   * @brief     STM32F401xx Devices vector table for Atollic TrueSTUDIO toolchain.
   *            This module performs:
   *                - Set the initial SP
@@ -231,7 +231,10 @@ g_pfnVectors:
   .word     0                                 /* Reserved                     */
   .word     0                                 /* Reserved                     */
   .word     FPU_IRQHandler                    /* FPU                          */
-                        
+  .word     0                                 /* Reserved                     */
+  .word     0                                 /* Reserved                     */
+  .word     SPI4_IRQHandler                   /* SPI4                         */ 
+                          
 /*******************************************************************************
 *
 * Provide weak aliases for each Exception handler to the Default_Handler. 
@@ -429,6 +432,9 @@ g_pfnVectors:
    .thumb_set I2C3_ER_IRQHandler,Default_Handler
 
    .weak      FPU_IRQHandler                  
-   .thumb_set FPU_IRQHandler,Default_Handler  
-      
+   .thumb_set FPU_IRQHandler,Default_Handler
+   
+   .weak      SPI4_IRQHandler            
+   .thumb_set SPI4_IRQHandler,Default_Handler  
+           
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

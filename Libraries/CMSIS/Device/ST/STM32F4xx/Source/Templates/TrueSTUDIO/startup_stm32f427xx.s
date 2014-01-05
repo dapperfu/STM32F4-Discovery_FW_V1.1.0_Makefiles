@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file      startup_stm32f427x.s
   * @author    MCD Application Team
-  * @version   V1.2.0
-  * @date      11-September-2013
+  * @version   V1.3.0
+  * @date      08-November-2013
   * @brief     STM32F42xxx/43xxx Devices vector table for Atollic TrueSTUDIO toolchain.   
   *            Same as startup_stm32f42_43xxx.s and maintained for legacy purpose
   *            This module performs:
