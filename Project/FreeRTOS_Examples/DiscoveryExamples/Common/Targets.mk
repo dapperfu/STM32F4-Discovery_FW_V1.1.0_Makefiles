@@ -9,7 +9,7 @@ TOOLCHAIN=arm-none-eabi-
 CC=$(TOOLCHAIN)gcc
 LD=$(TOOLCHAIN)ld 
 AR=$(TOOLCHAIN)ar
-AS=$(TOOLCHAIN)as
+AS=$(TOOLCHAIN)gcc -x assembler-with-cpp
 CP=$(TOOLCHAIN)objcopy
 OD=$(TOOLCHAIN)objdump
 
@@ -39,7 +39,6 @@ SRC+= $(COMMON)/basic_io.c
 SRC+= $(COMMON)/uart_support.c
 SRC+= $(COMMON)/utils.c
 SRC+= $(COMMON)/debug.c
-SRC+= $(COMMON)/system_stm32f4xx.c
 SRC+= $(FREERTOS)/croutine.c
 SRC+= $(FREERTOS)/list.c
 SRC+= $(FREERTOS)/queue.c
@@ -48,6 +47,8 @@ SRC+= $(FREERTOS)/timers.c
 SRC+= $(FREERTOS)/portable/MemMang/heap_1.c
 SRC+= $(FREERTOS)/portable/GCC/ARM_CM4F/port.c
 SRC+= $(DISCOVERY)/stm32f4_discovery.c
+SRC+= $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+SRC+= $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/gcc_none_eabi/syscalls.c
 SRC+= $(STM32F4xx_SRC)
 
 # Object files groups
@@ -55,12 +56,12 @@ COBJS    = $(SRC:.c=.o)
 ASMOBJS  = $(STARTUP:.s=.o)
 
 # Startup assembly files
-STARTUP = $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/gcc_ride7/startup_stm32f40_41xxx.s
+STARTUP = $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/gcc_none_eabi/startup_stm32f4xx.s
 # Linker File
-LINKER  = $(COMMON)/stm32_flash.ld
+LDSCRIPT = $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/gcc_none_eabi/stm32f4xxxg_flash.ld
 
 # Convert Include Directory to -I{dir} format
-IINCDIR   = $(patsubst %,-I%,$(STM32_INCLUDES))
+IINCDIR = $(patsubst %,-I%,$(STM32_INCLUDES))
 
 # Targets
 .PHONY: all
