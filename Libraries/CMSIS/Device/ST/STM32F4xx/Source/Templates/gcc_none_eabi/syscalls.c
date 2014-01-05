@@ -49,10 +49,10 @@ extern void __putchar (char ch);
 
 int _read_r (struct _reent *r, int file, char * ptr, int len)
 {
-  r = r;
-  file = file;
-  ptr = ptr;
-  len = len;
+	(void)r;
+	(void)file;
+	(void)ptr;
+	(void)len;
   
   errno = EINVAL;
   return -1;
@@ -62,10 +62,10 @@ int _read_r (struct _reent *r, int file, char * ptr, int len)
 
 int _lseek_r (struct _reent *r, int file, int ptr, int dir)
 {
-  r = r;
-  file = file;
-  ptr = ptr;
-  dir = dir;
+	(void)r;
+	(void)file;
+	(void)ptr;
+	(void)dir;
   
   return 0;
 }
@@ -74,9 +74,9 @@ int _lseek_r (struct _reent *r, int file, int ptr, int dir)
 
 int _write_r (struct _reent *r, int file, char * ptr, int len)
 {  
-  r = r;
-  file = file;
-  ptr = ptr;
+	(void)r;
+	(void)file;
+	(void)ptr;
 
 #if 0
   int index;
@@ -100,6 +100,8 @@ int _write_r (struct _reent *r, int file, char * ptr, int len)
 
 int _close_r (struct _reent *r, int file)
 {
+	(void)r;
+	(void)file;
   return 0;
 }
 
@@ -107,6 +109,8 @@ int _close_r (struct _reent *r, int file)
 
 caddr_t _sbrk_r (struct _reent *r, int incr)
 {
+	(void)r;
+	
   extern char   end asm ("end");                /* Defined by the linker.  */
   extern char   HeapLimit asm("__HeapLimit");   /* Defined by the linker.  */
   static char * heap_end;
@@ -142,8 +146,8 @@ caddr_t _sbrk_r (struct _reent *r, int incr)
 
 int _fstat_r (struct _reent *r, int file, struct stat * st)
 {
-  r = r; 
-  file = file;
+  (void)r; 
+  (void)file;
    
   memset (st, 0, sizeof (* st));
   st->st_mode = S_IFCHR;
@@ -154,8 +158,8 @@ int _fstat_r (struct _reent *r, int file, struct stat * st)
 
 int _isatty_r (struct _reent *r, int fd)
 {
-  r = r;
-  fd = fd;
+  (void)r;
+  (void)fd;
    
   return 1;
 }
@@ -164,7 +168,7 @@ int _isatty_r (struct _reent *r, int fd)
 
 void _exit (int a)
 {
-  a = a;
+  (void)a;
   
   while(1) {};
 }
@@ -173,9 +177,8 @@ void _exit (int a)
 
 int _kill (int a, int b)
 {
-  a = a;
-  b = b;
-  
+  (void)a;
+  (void)b;
   return 0;
 }
 
@@ -183,8 +186,7 @@ int _kill (int a, int b)
 
 int _getpid(int a)
 {
-  a = a;
-  
+	(void)a;
   return 0;
 }
 
