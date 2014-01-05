@@ -1,21 +1,6 @@
-#
-#       !!!! Do NOT edit this makefile with an editor which replace tabs by spaces !!!!    
-#
-##############################################################################################
-# 
-# On command line:
-#
-# make all = Create project
-#
-# make clean = Clean project files.
-#
-# To rebuild project do "make clean" and "make all".
-#
-
 ##############################################################################################
 # Start of default section
 #
-
 TRGT = arm-none-eabi-
 CC   = $(TRGT)gcc
 CP   = $(TRGT)objcopy
@@ -23,7 +8,6 @@ AS   = $(TRGT)gcc -x assembler-with-cpp
 BIN  = $(CP) -O ihex 
 
 MCU  = cortex-m4
-
 # List all default C defines here, like -D_DEBUG=1
 DDEFS =
 
@@ -38,8 +22,6 @@ DLIBDIR =
 
 # List all default libraries here
 DLIBS = 
-
-#
 # End of default section
 ##############################################################################################
 
@@ -50,7 +32,6 @@ DLIBS =
 # 
 # Define project name and Ram/Flash mode here
 PROJECT        = test
-RUN_FROM_FLASH = 0
 USE_HARD_FPU   = 1
 HEAP_SIZE      = 8192
 STACK_SIZE     = 2048
@@ -58,19 +39,34 @@ STACK_SIZE     = 2048
 #
 # Define linker script file here
 #
-ifeq ($(RUN_FROM_FLASH), 0)
-LDSCRIPT = ./prj/stm32f4xx_ram.ld
-FULL_PRJ = $(PROJECT)_ram
-else
 LDSCRIPT = ./prj/stm32f4xxxg_flash.ld
-FULL_PRJ = $(PROJECT)_rom
-endif
+FULL_PRJ = $(PROJECT)
+
+## Folder Paths.
+# Relative path to STM32F4-Discovery-FW root.
+STMFIRM=../..
+## Utilities
+# Discovery board path
+DISCOVERY=$(STMFIRM)/Utilities/STM32F4-Discovery
+## Libraries
+# CMSIS Path
+CMSIS=$(STMFIRM)/Libraries/CMSIS
+# STM32 USB Device Library
+STM32_USB_Device_Library=$(STMFIRM)/Libraries/STM32_USB_Device_Library
+# STM32 USB HOST Library
+STM32_USB_HOST_Library=$(STMFIRM)/Libraries/STM32_USB_HOST_Library
+# STM32 USB OTG Driver
+STM32_USB_OTG_Driver=$(STMFIRM)/Libraries/STM32_USB_OTG_Driver
+# Standard Peripheral Driver Path
+STM32F4xx_StdPeriph_Driver=$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver
+# Makefile include with all peripheral driver files
+include $(STM32F4xx_StdPeriph_Driver)/STM32F4xx_StdPeriph_Driver.mk
 
 #
 # Define FPU settings here
 #
 ifeq ($(USE_HARD_FPU), 0)
-FPU =
+FPU = -mfloat-abi=soft
 else
 FPU = -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__FPU_USED=1
 endif
@@ -83,17 +79,17 @@ UDEFS =
 UADEFS = 
 
 # List C source files here
-SRC  = ./cmsis/device/system_stm32f4xx.c \
-       ./src/syscalls.c \
-       ./src/main.c
+SRC = ./cmsis/device/system_stm32f4xx.c
+SRC+= ./src/syscalls.c
+SRC+= ./src/main.c
 
 # List ASM source files here
 ASRC = ./cmsis/device/startup_stm32f4xx.s
 
 # List all user directories here
-UINCDIR = ./inc \
-          ./cmsis/core \
-          ./cmsis/device
+UINCDIR = ./inc
+UINCDIR+= ./cmsis/core
+UINCDIR+= ./cmsis/device
 
 # List the user directory to look for the libraries here
 ULIBDIR =
@@ -103,15 +99,13 @@ ULIBS =
 
 # Define optimisation level here
 OPT = -O0 
-#OPT = -O2 -falign-functions=16 -fno-inline -fomit-frame-pointer
 
 #
 # End of user defines
 ##############################################################################################
 
-
-INCDIR  = $(patsubst %,-I%,$(DINCDIR) $(UINCDIR))
-LIBDIR  = $(patsubst %,-L%,$(DLIBDIR) $(ULIBDIR))
+INCDIR  = $(patsubst %,-I%,$(sort $(DINCDIR) $(UINCDIR)))
+LIBDIR  = $(patsubst %,-L%,$(sort $(DLIBDIR) $(ULIBDIR)))
 
 ifeq ($(RUN_FROM_FLASH), 0)
 DEFS    = $(DDEFS) $(UDEFS) -DRUN_FROM_FLASH=0 -DVECT_TAB_SRAM
