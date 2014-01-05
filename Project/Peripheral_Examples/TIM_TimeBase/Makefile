@@ -1,7 +1,4 @@
-# Define project name, FPU, Heap & Stack here
-# PROJECT		   = IO_Toggle
-
-# Derive the project name from the current folder.
-PROJECT        = $(notdir $(CURDIR))
+# Include a common makefile. The project name is automatically generated from
+#	the folder name
 
 include ../Common.mk

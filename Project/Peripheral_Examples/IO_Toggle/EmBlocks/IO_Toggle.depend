@@ -1,0 +1,321 @@
+# depslib dependency file v1.0
+1388900447 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\device\st\stm32f4xx\source\templates\gcc_none_eabi\syscalls.c
+	<stdlib.h>
+	<errno.h>
+	<string.h>
+	<sys/stat.h>
+	<sys/types.h>
+
+1383965986 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\device\st\stm32f4xx\source\templates\system_stm32f4xx.c
+	"stm32f4xx.h"
+
+1383965610 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\device\st\stm32f4xx\include\stm32f4xx.h
+	"core_cm4.h"
+	"system_stm32f4xx.h"
+	<stdint.h>
+	"stm32f4xx_conf.h"
+
+1383843256 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\include\core_cm4.h
+	<stdint.h>
+	<core_cmInstr.h>
+	<core_cmFunc.h>
+	<core_cm4_simd.h>
+
+1383843256 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\include\core_cminstr.h
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+
+1383843256 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\include\core_cmfunc.h
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+
+1383843256 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\include\core_cm4_simd.h
+	<cmsis_iar.h>
+	<cmsis_ccs.h>
+
+1383965616 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\device\st\stm32f4xx\include\system_stm32f4xx.h
+
+1388892297 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_conf.h
+	"stm32f4xx_adc.h"
+	"stm32f4xx_can.h"
+	"stm32f4xx_crc.h"
+	"stm32f4xx_cryp.h"
+	"stm32f4xx_dac.h"
+	"stm32f4xx_dbgmcu.h"
+	"stm32f4xx_dcmi.h"
+	"stm32f4xx_dma.h"
+	"stm32f4xx_exti.h"
+	"stm32f4xx_flash.h"
+	"stm32f4xx_fsmc.h"
+	"stm32f4xx_hash.h"
+	"stm32f4xx_gpio.h"
+	"stm32f4xx_i2c.h"
+	"stm32f4xx_iwdg.h"
+	"stm32f4xx_pwr.h"
+	"stm32f4xx_rcc.h"
+	"stm32f4xx_rng.h"
+	"stm32f4xx_rtc.h"
+	"stm32f4xx_sdio.h"
+	"stm32f4xx_spi.h"
+	"stm32f4xx_syscfg.h"
+	"stm32f4xx_tim.h"
+	"stm32f4xx_usart.h"
+	"stm32f4xx_wwdg.h"
+	"misc.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_adc.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_can.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_crc.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_cryp.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_dac.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_dbgmcu.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_dcmi.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_dma.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_exti.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_flash.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_fsmc.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_hash.h
+	"stm32f4xx.h"
+
+1384211290 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_gpio.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_i2c.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_iwdg.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_pwr.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_rcc.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_rng.h
+	"stm32f4xx.h"
+
+1383966108 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_rtc.h
+	"stm32f4xx.h"
+
+1383966108 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_sdio.h
+	"stm32f4xx.h"
+
+1383966108 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_spi.h
+	"stm32f4xx.h"
+
+1383966108 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_syscfg.h
+	"stm32f4xx.h"
+
+1383966108 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_tim.h
+	"stm32f4xx.h"
+
+1383966108 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_usart.h
+	"stm32f4xx.h"
+
+1383966108 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_wwdg.h
+	"stm32f4xx.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\misc.h
+	"stm32f4xx.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\misc.c
+	"misc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_adc.c
+	"stm32f4xx_adc.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_can.c
+	"stm32f4xx_can.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_crc.c
+	"stm32f4xx_crc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_cryp.c
+	"stm32f4xx_cryp.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_cryp_aes.c
+	"stm32f4xx_cryp.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_cryp_des.c
+	"stm32f4xx_cryp.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_cryp_tdes.c
+	"stm32f4xx_cryp.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_dac.c
+	"stm32f4xx_dac.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_dbgmcu.c
+	"stm32f4xx_dbgmcu.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_dcmi.c
+	"stm32f4xx_dcmi.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_dma.c
+	"stm32f4xx_dma.h"
+	"stm32f4xx_rcc.h"
+
+1388866257 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\cmsis\device\st\stm32f4xx\source\templates\gcc_none_eabi\startup_stm32f4xx.s
+
+1388636351 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\project\peripheral_examples\io_toggle\\stm32f4xx_conf.h
+	"stm32f4xx_adc.h"
+	"stm32f4xx_can.h"
+	"stm32f4xx_crc.h"
+	"stm32f4xx_cryp.h"
+	"stm32f4xx_dac.h"
+	"stm32f4xx_dbgmcu.h"
+	"stm32f4xx_dcmi.h"
+	"stm32f4xx_dma.h"
+	"stm32f4xx_exti.h"
+	"stm32f4xx_flash.h"
+	"stm32f4xx_fsmc.h"
+	"stm32f4xx_hash.h"
+	"stm32f4xx_gpio.h"
+	"stm32f4xx_i2c.h"
+	"stm32f4xx_iwdg.h"
+	"stm32f4xx_pwr.h"
+	"stm32f4xx_rcc.h"
+	"stm32f4xx_rng.h"
+	"stm32f4xx_rtc.h"
+	"stm32f4xx_sdio.h"
+	"stm32f4xx_spi.h"
+	"stm32f4xx_syscfg.h"
+	"stm32f4xx_tim.h"
+	"stm32f4xx_usart.h"
+	"stm32f4xx_wwdg.h"
+	"misc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_dma2d.c
+	"stm32f4xx_dma2d.h"
+	"stm32f4xx_rcc.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_dma2d.h
+	"stm32f4xx.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_exti.c
+	"stm32f4xx_exti.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_flash.c
+	"stm32f4xx_flash.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_fsmc.c
+	"stm32f4xx_fsmc.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_gpio.c
+	"stm32f4xx_gpio.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_hash.c
+	"stm32f4xx_hash.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_hash_md5.c
+	"stm32f4xx_hash.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_hash_sha1.c
+	"stm32f4xx_hash.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_i2c.c
+	"stm32f4xx_i2c.h"
+	"stm32f4xx_rcc.h"
+
+1383966130 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_iwdg.c
+	"stm32f4xx_iwdg.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_ltdc.c
+	"stm32f4xx_ltdc.h"
+	"stm32f4xx_rcc.h"
+
+1383966106 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\inc\stm32f4xx_ltdc.h
+	"stm32f4xx.h"
+
+1384799772 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_pwr.c
+	"stm32f4xx_pwr.h"
+	"stm32f4xx_rcc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_rcc.c
+	"stm32f4xx_rcc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_rng.c
+	"stm32f4xx_rng.h"
+	"stm32f4xx_rcc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_rtc.c
+	"stm32f4xx_rtc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_sdio.c
+	"stm32f4xx_sdio.h"
+	"stm32f4xx_rcc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_spi.c
+	"stm32f4xx_spi.h"
+	"stm32f4xx_rcc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_syscfg.c
+	"stm32f4xx_syscfg.h"
+	"stm32f4xx_rcc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_tim.c
+	"stm32f4xx_tim.h"
+	"stm32f4xx_rcc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_usart.c
+	"stm32f4xx_usart.h"
+	"stm32f4xx_rcc.h"
+
+1383966132 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\libraries\stm32f4xx_stdperiph_driver\src\stm32f4xx_wwdg.c
+	"stm32f4xx_wwdg.h"
+	"stm32f4xx_rcc.h"
+
+1388636291 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\project\peripheral_examples\io_toggle\main.c
+	"stm32f4_discovery.h"
+	"stm32f4xx_gpio.h"
+	"stm32f4xx_rcc.h"
+
+1388867645 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\utilities\stm32f4-discovery\stm32f4_discovery.h
+	"stm32f4xx.h"
+	"stm32f4xx_usart.h"
+	"stm32f4xx_exti.h"
+	"stm32f4xx_sdio.h"
+
+1388469798 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\project\peripheral_examples\io_toggle\stm32f4xx_it.c
+	"stm32f4xx_it.h"
+
+1388636396 c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\project\peripheral_examples\io_toggle\stm32f4xx_it.h
+	"stm32f4xx.h"
+
+1388875443 source:c:\stm32f4discovery\stm32f4-discovery_fw_v1.1.0_makefiles\utilities\stm32f4-discovery\stm32f4_discovery.c
+	"stm32f4_discovery.h"
+	"stm32f4xx_dma.h"
+	"stm32f4xx_exti.h"
+	"stm32f4xx_sdio.h"
+
