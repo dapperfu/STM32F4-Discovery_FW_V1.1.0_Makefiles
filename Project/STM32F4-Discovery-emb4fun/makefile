@@ -9,7 +9,7 @@ BIN  = $(CP) -O ihex
 
 MCU  = cortex-m4
 # List all default C defines here, like -D_DEBUG=1
-DDEFS = -DSTM32F40_41xxx
+DDEFS = -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER
 
 # List all default ASM defines here, like -D_DEBUG=1
 DADEFS = 
@@ -72,9 +72,10 @@ UDEFS =
 UADEFS = 
 
 # List C source files here
-SRC = $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-SRC+= $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/gcc_none_eabi/syscalls.c
 SRC+= ./src/main.c
+SRC+= $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+SRC+= $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/gcc_none_eabi/syscalls.c
+SRC+= $(STM32F4xx_SRC)
 
 # List ASM source files here
 ASRC = $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/gcc_none_eabi/startup_stm32f4xx.s
@@ -82,6 +83,8 @@ ASRC = $(CMSIS)/Device/ST/STM32F4xx/Source/Templates/gcc_none_eabi/startup_stm32
 # List all user directories here
 UINCDIR+= $(CMSIS)/Include
 UINCDIR+= $(CMSIS)/Device/ST/STM32F4xx/Include
+UINCDIR+= $(STMFIRM)/Utilities/STM32F4-Discovery
+UINCDIR+= $(STM32F4xx_INC)
 
 # List the user directory to look for the libraries here
 ULIBDIR =
