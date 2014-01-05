@@ -19,10 +19,10 @@ SHELL=/bin/sh
 ## Folder Paths.
 # Relative path to STM32F4-Discovery-FW root.
 STMFIRM=../..
+## Utilities
 # Discovery board path
 DISCOVERY=$(STMFIRM)/Utilities/STM32F4-Discovery
-
-# Libraries
+## Libraries
 # CMSIS Path
 CMSIS=$(STMFIRM)/Libraries/CMSIS
 # STM32 USB Device Library
