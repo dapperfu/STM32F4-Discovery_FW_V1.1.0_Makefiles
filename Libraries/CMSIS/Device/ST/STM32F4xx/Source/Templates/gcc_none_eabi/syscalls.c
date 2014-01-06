@@ -84,11 +84,6 @@ int _write_r (struct _reent *r, int file, char * ptr, int len)
   /* For example, output string by UART */
   for(index=0; index<len; index++)
   {
-    if (ptr[index] == '\n')
-    {
-      __putchar('\r');
-    }  
-
     __putchar(ptr[index]);
   }  
 #endif   

@@ -4,11 +4,18 @@ PROJECT        = $(notdir $(CURDIR))
 # Set up stack and heap sizes & FPU Usage.
 USE_HARD_FPU   = 1
 HEAP_SIZE      = 8192
-STACK_SIZE     = 2048
+STACK_SIZE     = 1024
 MCU  		   = cortex-m4
 
 # Compiler programs.
+ifeq ($(OS),Windows_NT)
 TRGT = arm-none-eabi-
+else ifeq ($(shell uname), Linux)
+TRGT = /opt/gcc-arm-none-eabi/bin/arm-none-eabi-
+else
+TRGT = arm-none-eabi-
+endif
+
 CC   = $(TRGT)gcc
 CP   = $(TRGT)objcopy
 AS   = $(TRGT)gcc -x assembler-with-cpp

@@ -116,6 +116,7 @@ void vUSART2_Init(void) {
   */
 int main(void)
 {
+  char buffer[255];
   /*!< At this stage the microcontroller clock setting is already configured, 
        this is done through SystemInit() function which is called from startup
        file (startup_stm32f4xx.s) before to branch to application main.
@@ -131,6 +132,7 @@ int main(void)
         - Hardware flow control disabled (RTS and CTS signals)
         - Receive and transmit enabled
   */
+  
   USART_InitStructure.USART_BaudRate = 115200;
   USART_InitStructure.USART_WordLength = USART_WordLength_8b;
   USART_InitStructure.USART_StopBits = USART_StopBits_1;
@@ -141,17 +143,17 @@ int main(void)
   STM_EVAL_COMInit(COM1, &USART_InitStructure);
   vUSART2_Init();
   /* Output a message on Hyperterminal using printf function */
-  printf("\n\rUSART Printf Example: retarget the C library printf function to the USART\n\r");
-  USART_SendData(USART2, 'x');
+  printf("\r\nUSART Printf Example: retarget the C library printf function to the USART\r\n");
+  sprintf(buffer, "Hello World: %f\r\n",1.1234);
+  printf(buffer);
   while (1)
   {
     int ch;
-    
-    while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_RXNE) == RESET);
-  	
-    ch = USART_ReceiveData(EVAL_COM1);
-	  
-    printf("%c", ch&0xff);    
+	while (USART_GetFlagStatus(USART2, USART_FLAG_RXNE)== RESET);
+	
+	ch = USART_ReceiveData(USART2);
+	USART_ClearFlag(USART2, USART_FLAG_RXNE);
+	printf("%c", ch);    
   }
 }
 
@@ -164,10 +166,10 @@ void __putchar (char ch)
 {
   /* Place your implementation of fputc here */
   /* e.g. write a character to the USART */
-  USART_SendData(EVAL_COM1, (uint8_t) ch);
+  USART_SendData(USART2, (uint8_t) ch);
 
   /* Loop until the end of transmission */
-  while (USART_GetFlagStatus(EVAL_COM1, USART_FLAG_TC) == RESET);
+  while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
 
   //return ch;
 }

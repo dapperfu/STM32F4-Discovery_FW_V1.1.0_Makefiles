@@ -108,12 +108,13 @@ SECTIONS
 		*(.ARM.extab* .gnu.linkonce.armextab.*)
 	} > FLASH
 
-	__exidx_start = .;
+	
 	.ARM.exidx :
 	{
+		__exidx_start = .;
 		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
+		__exidx_end = .;
 	} > FLASH
-	__exidx_end = .;
 
 	__etext = .;
 		
