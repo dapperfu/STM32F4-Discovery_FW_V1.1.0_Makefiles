@@ -78,7 +78,7 @@ int _write_r (struct _reent *r, int file, char * ptr, int len)
 	(void)file;
 	(void)ptr;
 
-#if 0
+#if 1
   int index;
   
   /* For example, output string by UART */

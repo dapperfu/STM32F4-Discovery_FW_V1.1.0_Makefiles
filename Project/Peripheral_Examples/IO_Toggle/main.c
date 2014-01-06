@@ -93,12 +93,12 @@ int main(void)
     GPIO_SetBits(GPIOD, GPIO_Pin_15);
     
     /* Insert delay */
-    Delay(0x7FFFFF);
+    Delay(0xFFFFF);
     
     GPIO_ResetBits(GPIOD, GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);
     
     /* Insert delay */
-    Delay(0xFFFFFF);
+    Delay(0xFFFFF);
   }
 }
 
