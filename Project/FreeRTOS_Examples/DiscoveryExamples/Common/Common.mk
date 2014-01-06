@@ -15,7 +15,7 @@ AS   = $(TRGT)gcc -x assembler-with-cpp
 
 # Flashing Program & Flags
 FLASH      = C:\PROGRA~2\STMICR~1\STM32S~1\ST-LIN~1\ST-LIN~1.EXE
-FLAGSFLAGS = -V -c SWD UR -P $(PROJECT).hex -Rst
+FLASHFLAGS = -V -c SWD UR -P $(PROJECT).hex -Rst
 
 # List all default C defines here, like -D_DEBUG=1
 DDEFS = -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER
