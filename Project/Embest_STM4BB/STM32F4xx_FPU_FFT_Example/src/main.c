@@ -123,7 +123,7 @@ uint32_t refIndex = 213, testIndex = 0;
 * Max magnitude FFT Bin test 
 * ------------------------------------------------------------------- */ 
  
-int32_t main(void) 
+int main(void) 
 { 
   volatile int32_t iCount; 
   arm_status status; 
@@ -170,12 +170,17 @@ int32_t main(void)
 
   while(1)
   {
-    STM_EVAL_LEDOn(LED6);
-    for (iCount = 0; iCount < 1000000; iCount++);
-    STM_EVAL_LEDOff(LED6);
-    for (iCount = 0; iCount < 1000000; iCount++);
+    STM_EVAL_LEDToggle(LED6);
+    for (iCount = 0; iCount < 1000; iCount++) {
+		/* Process the data through the Complex Magnitude Module for  
+		calculating the magnitude at each bin */ 
+		arm_cmplx_mag_f32(testInput_f32_10khz, testOutput, fftSize);  
+
+		/* Calculates maxValue and returns corresponding BIN value */ 
+		arm_max_f32(testOutput, fftSize, &maxValue, &testIndex); 
+	}
   }
-  return (0);
+  return 0;
 } 
  
  /** \endlink */ 

@@ -18,7 +18,9 @@ FLASH      = C:\PROGRA~2\STMICR~1\STM32S~1\ST-LIN~1\ST-LIN~1.EXE
 FLASHFLAGS = -c SWD UR -P $(PROJECT).hex -Rst
 
 # List all default C defines here, like -D_DEBUG=1
-DDEFS = -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4
+DDEFS+= -DSTM32F40_41xxx 
+DDEFS+= -DUSE_STDPERIPH_DRIVER 
+DDEFS+= -DARM_MATH_CM4
 
 # List all default ASM defines here, like -D_DEBUG=1
 DADEFS = 
@@ -36,7 +38,9 @@ DLIBS =
 
 ## Folder Paths.
 # Relative path to STM32F4-Discovery-FW root.
+ifeq ($(STMFIRM),)
 STMFIRM=../../..
+endif 
 ## Utilities
 # Discovery board path
 DISCOVERY=$(STMFIRM)/Utilities/STM32F4-Discovery
@@ -92,23 +96,32 @@ ULIBS+=
 
 # Define optimisation level here
 OPT = -O3
-
-#
 # End of user defines
 ##############################################################################################
 
+# Include and Lib directories
 INCDIR  = $(patsubst %,-I%,$(sort $(DINCDIR) $(UINCDIR)))
 LIBDIR  = $(patsubst %,-L%,$(sort $(DLIBDIR) $(ULIBDIR)))
 
+# Assembler Definitions.
 ADEFS   = $(DADEFS) $(UADEFS) -D__HEAP_SIZE=$(HEAP_SIZE) -D__STACK_SIZE=$(STACK_SIZE)
 OBJS    = $(SRC:.c=.o) $(ASRC:.s=.o)
 LIBS    = $(DLIBS) $(ULIBS)
 MCFLAGS = -mthumb -mcpu=$(MCU) $(FPU)
 
+# Assembler Flags
 ASFLAGS  = $(MCFLAGS) $(OPT) -g -gdwarf-2 -Wa,-amhls=$(<:.s=.lst) $(ADEFS)
 
-CPFLAGS  = $(MCFLAGS) $(OPT) -gdwarf-2 -Wall -Wstrict-prototypes -fverbose-asm 
-CPFLAGS += -ffunction-sections -fdata-sections -Wa,-ahlms=$(<:.c=.lst) $(DDEFS)
+# Compiler Flags
+CPFLAGS+= $(MCFLAGS) $(OPT) 
+CPFLAGS+=-gdwarf-2 
+CPFLAGS+=-Wall 
+CPFLAGS+=-Wstrict-prototypes 
+CPFLAGS+=-fverbose-asm 
+CPFLAGS+= -ffunction-sections 
+CPFLAGS+=-fdata-sections 
+CPFLAGS+=-Wa,-ahlms=$(<:.c=.lst) $(DDEFS)
+CPFLAGS+= -fsingle-precision-constant
 
 LDFLAGS  = $(MCFLAGS) -nostartfiles -T$(LDSCRIPT) -Wl,-Map=$(PROJECT).map,--cref,--gc-sections,--no-warn-mismatch $(LIBDIR)
 
