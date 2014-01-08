@@ -1,7 +1,12 @@
-# Define project name, FPU, Heap & Stack here
-# PROJECT		   = IO_Toggle
-
-# Derive the project name from the current folder.
-PROJECT        = $(notdir $(CURDIR))
+# Project Name (If blank the folder name is used as project name)
+PROJECT= 
+# List the user directory to look for the libraries here
+ULIBDIR=
+# List all user libraries here
+ULIBS  = 
+# Define ASM defines here
+UADEFS = 
+# Define C defines here
+UCDEFS = 
 
 include ../Common.mk

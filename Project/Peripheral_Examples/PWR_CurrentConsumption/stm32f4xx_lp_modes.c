@@ -59,7 +59,7 @@
   * @retval None
   */
 void SleepMode_Measure(void)
-{
+{  
   __IO uint32_t index = 0;
   GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -87,15 +87,11 @@ void SleepMode_Measure(void)
 
   /* Request to enter SLEEP mode */
   __WFI();
-
-  /* Initialize LED4 on STM32F4-Discovery board */
-  STM_EVAL_LEDInit(LED4);
-
   /* Infinite loop */
   while (1)
   {
     /* Toggle The LED4 */
-    STM_EVAL_LEDToggle(LED4);
+    STM_EVAL_LEDToggle(LED3);
 
     /* Inserted Delay */
     for(index = 0; index < 0x5FFFFF; index++);
@@ -117,7 +113,7 @@ void SleepMode_Measure(void)
   * @retval None
   */
 void StopMode_Measure(void)
-{
+{  
   __IO uint32_t index = 0;
   GPIO_InitTypeDef GPIO_InitStructure;
   NVIC_InitTypeDef  NVIC_InitStructure;
@@ -198,9 +194,6 @@ void StopMode_Measure(void)
   /* Enter Stop Mode */
   PWR_EnterSTOPMode(PWR_Regulator_LowPower, PWR_STOPEntry_WFI);
 
-  /* Initialize LED4 on STM32F4-Discovery board */
-  STM_EVAL_LEDInit(LED4);
-
   /* Infinite loop */
   while (1)
   {
@@ -224,7 +217,8 @@ void StopMode_Measure(void)
   * @retval None
   */
 void StandbyMode_Measure(void)
-{
+{  
+  __IO uint32_t index = 0;
   /* Enable WKUP pin 1 */
   PWR_WakeUpPinCmd(ENABLE);
 
@@ -234,6 +228,11 @@ void StandbyMode_Measure(void)
   /* Infinite loop */
   while (1)
   {
+    /* Toggle The LED4 */
+    STM_EVAL_LEDToggle(LED5);
+
+    /* Inserted Delay */
+    for(index = 0; index < 0x5FFFFF; index++);
   }
 }
 
@@ -250,7 +249,8 @@ void StandbyMode_Measure(void)
   * @retval None
   */
 void StandbyRTCMode_Measure(void)
-{
+{  
+  __IO uint32_t index = 0;
   /* Allow access to RTC */
   PWR_BackupAccessCmd(ENABLE);
 
@@ -295,6 +295,11 @@ void StandbyRTCMode_Measure(void)
   /* Infinite loop */
   while (1)
   {
+    /* Toggle The LED4 */
+    STM_EVAL_LEDToggle(LED6);
+
+    /* Inserted Delay */
+    for(index = 0; index < 0x5FFFFF; index++);
   }
 }
 
@@ -312,7 +317,8 @@ void StandbyRTCMode_Measure(void)
   * @retval None
   */
 void StandbyRTCBKPSRAMMode_Measure(void)
-{   
+{     
+  __IO uint32_t index = 0;
   /* Allow access to RTC */
   PWR_BackupAccessCmd(ENABLE);
   
@@ -369,6 +375,12 @@ void StandbyRTCBKPSRAMMode_Measure(void)
   /* Infinite loop */
   while (1)
   {
+    /* Toggle The LED4 */
+    STM_EVAL_LEDToggle(LED3);
+    STM_EVAL_LEDToggle(LED4);
+
+    /* Inserted Delay */
+    for(index = 0; index < 0x5FFFFF; index++);
   }
 }
 
