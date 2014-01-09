@@ -16,3 +16,5 @@ DISCOVERY=$(STMFIRM)/Utilities/STM32F4-Discovery
 CMSIS=$(STMFIRM)/Libraries/CMSIS
 # Standard Peripheral Driver Path
 STM32F4xx_StdPeriph_Driver=$(STMFIRM)/Libraries/STM32F4xx_StdPeriph_Driver
+# FreeRTOS
+FREERTOS=$(STMFIRM)/FreeRTOS/FreeRTOS/Source

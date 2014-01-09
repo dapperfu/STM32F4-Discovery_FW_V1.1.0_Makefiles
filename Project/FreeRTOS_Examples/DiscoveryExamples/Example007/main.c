@@ -45,9 +45,6 @@
 #include "task.h"
 #include "debug.h"
 
-/* Serial Support */
-#include "uart_support.h"
-
 /* Demo includes. */
 #include "basic_io.h"
 
