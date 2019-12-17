@@ -7,5 +7,11 @@ pipeline {
       }
     }
 
+    stage('Archive Artifacts') {
+      steps {
+        archiveArtifacts(artifacts: '**/*.hex,**/*.elf,**/*.bin', fingerprint: true)
+      }
+    }
+
   }
 }
