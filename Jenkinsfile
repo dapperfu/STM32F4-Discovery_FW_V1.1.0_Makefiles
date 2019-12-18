@@ -15,7 +15,7 @@ pipeline {
 
     stage('Clean') {
       steps {
-        sh 'make clean'
+        sh 'make -P Project clean'
       }
     }
 
