@@ -1,5 +1,4 @@
 # PWR_STOP project
-        ${CMSIS}/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
 add_stm32_project(PWR_STOP
     SOURCES
         main.c
@@ -10,4 +9,3 @@ add_stm32_project(PWR_STOP
     ASM_SOURCES
         ${COMMON_CMSIS_ASM_SOURCES}
 )
-

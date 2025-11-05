@@ -26,10 +26,16 @@ add_stm32_project(Audio_playback_and_record
         ${STM32_USB_OTG_Driver}/src/usb_hcd.c
         ${STM32_USB_OTG_Driver}/src/usb_hcd_int.c
         ${STM32_USB_OTG_Driver}/src/usb_otg.c
+        ${STMFIRM}/Utilities/Third_Party/fat_fs/src/ff.c
+        ${STMFIRM}/Utilities/Third_Party/fat_fs/src/fattime.c
     ASM_SOURCES
         ${COMMON_CMSIS_ASM_SOURCES}
     INCLUDES
         inc
+        ${STM32_USB_HOST_Library}/Core/inc
+        ${STM32_USB_HOST_Library}/Class/MSC/inc
+        ${STM32_USB_OTG_Driver}/inc
+        ${STMFIRM}/Utilities/Third_Party/fat_fs/inc
     DEFINES
         USE_USB_OTG_FS
 )

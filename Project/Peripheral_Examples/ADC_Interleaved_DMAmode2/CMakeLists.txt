@@ -1,5 +1,4 @@
 # ADC_Interleaved_DMAmode2 project
-        ${CMSIS}/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
 add_stm32_project(ADC_Interleaved_DMAmode2
     SOURCES
         main.c
@@ -10,4 +9,3 @@ add_stm32_project(ADC_Interleaved_DMAmode2
     ASM_SOURCES
         ${COMMON_CMSIS_ASM_SOURCES}
 )
-

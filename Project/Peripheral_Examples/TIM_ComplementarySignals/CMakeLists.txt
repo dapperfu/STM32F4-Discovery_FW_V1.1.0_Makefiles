@@ -1,5 +1,4 @@
 # TIM_ComplementarySignals project
-        ${CMSIS}/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
 add_stm32_project(TIM_ComplementarySignals
     SOURCES
         main.c
@@ -10,4 +9,3 @@ add_stm32_project(TIM_ComplementarySignals
     ASM_SOURCES
         ${COMMON_CMSIS_ASM_SOURCES}
 )
-

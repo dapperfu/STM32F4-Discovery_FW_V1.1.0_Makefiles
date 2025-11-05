@@ -1,5 +1,4 @@
 # Add all peripheral example subdirectories
-        ${CMSIS}/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
 add_subdirectory(IO_Toggle)
 add_subdirectory(EXTI)
 add_subdirectory(SysTick)
