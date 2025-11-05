@@ -10,7 +10,7 @@ https://github.com/jed-frey/STM32F4-Discovery_FW_V1.1.0_Makefiles/issues
 
 # Requirements
 
-- ARM toolchain: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads
+- ARM toolchain: https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain
 
 
 Adding to your path:
