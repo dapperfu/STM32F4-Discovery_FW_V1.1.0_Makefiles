@@ -1,0 +1,22 @@
+# Add all peripheral example subdirectories
+        ${CMSIS}/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+add_subdirectory(IO_Toggle)
+add_subdirectory(EXTI)
+add_subdirectory(SysTick)
+add_subdirectory(RCC)
+add_subdirectory(PWR_STOP)
+add_subdirectory(PWR_STANDBY)
+add_subdirectory(PWR_CurrentConsumption)
+add_subdirectory(MEMS)
+add_subdirectory(IWDG)
+add_subdirectory(FLASH_Program)
+add_subdirectory(FLASH_Write_Protection)
+add_subdirectory(DMA_FLASH_RAM)
+add_subdirectory(DAC_SignalsGeneration)
+add_subdirectory(ADC3_DMA)
+add_subdirectory(ADC_Interleaved_DMAmode2)
+add_subdirectory(TIM_TimeBase)
+add_subdirectory(TIM_PWM_Output)
+add_subdirectory(TIM_PWM_Input)
+add_subdirectory(TIM_ComplementarySignals)
+

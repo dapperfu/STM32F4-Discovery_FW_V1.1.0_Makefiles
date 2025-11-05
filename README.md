@@ -51,3 +51,60 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
     cd STM32F4-Discovery_FW_V1.1.0_Makefiles/Project/Peripheral_Examples/IO_Toggle
     make
+
+## CMake Build Support
+
+This project now includes comprehensive CMake support. Every project can be built with CMake using either Ninja or GNU Make as the generator, and the outputs are binary identical to the Makefile builds.
+
+### Requirements
+
+- CMake 3.15 or higher
+- Ninja (optional, for faster builds) or GNU Make
+- ARM toolchain (same as above)
+
+### Building with CMake
+
+#### Using Ninja (Recommended)
+
+    cd STM32F4-Discovery_FW_V1.1.0_Makefiles
+    mkdir build && cd build
+    cmake -G Ninja ..
+    ninja
+
+#### Using GNU Make
+
+    cd STM32F4-Discovery_FW_V1.1.0_Makefiles
+    mkdir build && cd build
+    cmake ..
+    make
+
+#### Building a Specific Project
+
+    cd STM32F4-Discovery_FW_V1.1.0_Makefiles
+    mkdir build && cd build
+    cmake ..
+    make IO_Toggle.elf    # Build IO_Toggle project
+    make Example001.elf   # Build FreeRTOS Example001
+
+#### Custom Toolchain Path
+
+If your toolchain is not in the default location, set the `ARM_TOOLCHAIN_PATH` environment variable:
+
+    export ARM_TOOLCHAIN_PATH=/opt/gcc-arm-none-eabi/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi
+    cd build
+    cmake ..
+    ninja
+
+### Binary Compatibility
+
+CMake builds produce binary identical outputs to Makefile builds. The compiler flags, linker scripts, and source file ordering are carefully matched to ensure identical ELF, HEX, and binary files.
+
+### Output Files
+
+CMake builds generate the same output files as Makefile builds:
+- `*.elf` - ELF executable
+- `*.hex` - Intel HEX format
+- `*.bin` - Binary format
+- `*.map` - Linker map file
+
+All output files are placed in the build directory under the respective project subdirectories, matching the Makefile build structure.

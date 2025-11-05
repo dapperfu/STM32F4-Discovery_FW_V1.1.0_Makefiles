@@ -1,0 +1,20 @@
+# FreeRTOS Discovery Examples
+# Add all example subdirectories
+add_subdirectory(Example001)
+add_subdirectory(Example002)
+add_subdirectory(Example003)
+add_subdirectory(Example004)
+add_subdirectory(Example005)
+add_subdirectory(Example006)
+add_subdirectory(Example007)
+add_subdirectory(Example008)
+add_subdirectory(Example009)
+add_subdirectory(Example010)
+add_subdirectory(Example011)
+add_subdirectory(Example012)
+add_subdirectory(Example013)
+add_subdirectory(Example014)
+add_subdirectory(Example015)
+add_subdirectory(Example016)
+add_subdirectory(Example017)
+
