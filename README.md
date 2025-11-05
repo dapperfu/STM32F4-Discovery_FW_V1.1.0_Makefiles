@@ -12,14 +12,15 @@ https://github.com/jed-frey/STM32F4-Discovery_FW_V1.1.0_Makefiles/issues
 
 - ARM toolchain: https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain
 
+**Note:** Make sure to download the none-eabi files for your platform.
 
 Adding to your path:
 
-Where "/opt/gcc-arm-none-eabi/gcc-arm-none-eabi-9-2019-q4-major" is where the toolchain is extracted
+Where "/opt/gcc-arm-none-eabi/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi" is where the toolchain is extracted
 
 Temporary:
 
-    export PATH=${PATH}:/opt/gcc-arm-none-eabi/gcc-arm-none-eabi-9-2019-q4-major/bin
+    export PATH=${PATH}:/opt/gcc-arm-none-eabi/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin
 
 Permanently, put the above in your ```.bashrc``` file.
 
